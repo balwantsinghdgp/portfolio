@@ -328,6 +328,9 @@
   .lost { position: absolute; z-index: 3; width: 24px; height: 21px; padding: 0; border: 2px solid var(--ink); border-radius: 3px; background: var(--paper-2); cursor: pointer; opacity: .6; rotate: var(--t, 0deg); animation: peek 4s ease-in-out infinite; transition: opacity .2s, scale .2s; }
   .lost::after { content: ""; position: absolute; left: 38%; width: 24%; top: 0; height: 42%; border: solid var(--ink); border-width: 0 1.5px 1.5px; }
   .lost:hover, .lost:focus-visible { opacity: 1; scale: 1.35; }
+  .spot { outline: 3px dashed var(--ink); outline-offset: 8px; border-radius: 12px; animation: spot .8s ease-in-out 4; }
+  @keyframes spot { 0%, 100% { outline-color: transparent; outline-offset: 16px; } 50% { outline-color: var(--ink); outline-offset: 6px; } }
+  .lost.spot { opacity: 1; scale: 1.7; }
   .lost.found { animation: found .5s forwards; pointer-events: none; }
   @keyframes peek { 0%, 86%, 100% { transform: none; } 90% { transform: translateY(-5px) rotate(-10deg); } 95% { transform: translateY(0) rotate(8deg); } }
   @keyframes found { to { transform: translateY(-40px) rotate(200deg) scale(0); opacity: 0; } }
@@ -1208,6 +1211,7 @@
   soundBtn.addEventListener('click', function () {
     soundOn = !soundOn; soundBtn.setAttribute('aria-pressed', String(soundOn));
     if (soundOn) { blip(523); setTimeout(function () { blip(784); }, 110); }
+    toast(soundOn ? '♪ Sound <b>on</b>' : 'Sound <b>off</b>', 1600);
   });
 
   /* ── night shift ── */
@@ -1495,6 +1499,25 @@
       toast('★ Stamp collected: <b>' + def.name + '</b> · ' + n + '/' + STAMPS.length);
     } else toast('★ Stamp collected: <b>' + def.name + '</b> · ' + n + '/' + STAMPS.length);
   }
+  /* jump to the thing a stamp is about, and point at it */
+  function goStamp(x, got) {
+    openPassport(false); blip(587);
+    if (x.id === 'forecast' && $('fc').hidden) $('tab-fc').click();
+    if (x.id === 'warehouse' && $('wh').hidden) $('tab-wh').click();
+    var sel = { poke: '#mascot', ink: '.inks', night: '#night-btn', tour: '#agent-btn', forecast: '#fc', warehouse: '#wh', beat: '.tabs',
+      route: '#route-wrap', cards: '#pile', copilot: '.chat', delivered: '#hi' }[x.id];
+    var el = x.id === 'parcels' ? [].slice.call(document.querySelectorAll('.lost')).filter(function (l) { return !l.hidden; })[0] : document.querySelector(sel);
+    toast(got ? '★ Already collected: <b>' + x.name + '</b>' : (x.id === 'parcels' && el ? 'Here is one. <b>Click it</b>, then hunt for the rest.' : 'Try it: <b>' + x.hint + '</b>'), 4200);
+    if (!el) return;
+    var how = calm ? 'auto' : 'smooth', r = el.getBoundingClientRect(), y;
+    if (el.closest('.nav')) y = null;
+    else if (x.id === 'delivered') y = document.documentElement.scrollHeight;
+    else if (x.id === 'route') y = r.top + scrollY - 60;
+    else y = r.top + scrollY - (r.height < innerHeight - 160 ? (innerHeight - r.height) / 2 : 90);
+    if (y != null) window.scrollTo({ top: Math.max(0, y), behavior: how });
+    var mark = x.id === 'route' ? $('route-cap') : el;
+    setTimeout(function () { mark.classList.remove('spot'); void mark.getBoundingClientRect(); mark.classList.add('spot'); setTimeout(function () { mark.classList.remove('spot'); }, 3200); }, y == null ? 0 : 500);
+  }
   function flipCount() { var st = ppLoad(); st.flips++; if (st.flips >= 3) award('cards'); ppSave(); }
   function openPassport(on) { $('passport').hidden = !on; $('stamp-btn').setAttribute('aria-expanded', String(on)); }
   function ppRender() {
@@ -1512,7 +1535,7 @@
       var hint = document.createElement('small'); hint.textContent = x.id === 'parcels' ? x.hint + ' (' + Object.keys(st.p).length + '/5)' : x.hint;
       b.appendChild(ring); b.appendChild(nm); b.appendChild(hint);
       b.setAttribute('aria-label', got ? x.name + ', collected' : 'Locked. ' + x.hint);
-      b.addEventListener('click', function () { var el = document.querySelector(x.go); openPassport(false); if (el) el.scrollIntoView({ block: 'center', behavior: calm ? 'auto' : 'smooth' }); });
+      b.addEventListener('click', function () { goStamp(x, got); });
       grid.appendChild(b);
     });
     var foot = $('pp-foot'); foot.textContent = '';
@@ -1522,7 +1545,7 @@
       foot.appendChild(document.createTextNode(' '));
     } else foot.appendChild(document.createTextNode('Tap a locked stamp to jump to it. Collect all ' + total + ' to unlock a reward. '));
     var rs = document.createElement('button'); rs.type = 'button'; rs.textContent = 'Start over';
-    rs.addEventListener('click', function () { pp = { s: {}, p: {}, flips: 0 }; ppSave(); document.querySelectorAll('.lost').forEach(function (l) { l.hidden = false; l.classList.remove('found'); }); if (root.getAttribute('data-ink') === 'gold') setInk('cobalt'); ppRender(); });
+    rs.addEventListener('click', function () { toast('Passport reset. <b>0/' + STAMPS.length + '</b>, go again.'); pp = { s: {}, p: {}, flips: 0 }; ppSave(); document.querySelectorAll('.lost').forEach(function (l) { l.hidden = false; l.classList.remove('found'); }); if (root.getAttribute('data-ink') === 'gold') setInk('cobalt'); ppRender(); });
     foot.appendChild(rs);
     var gold = document.querySelector('.inks [data-ink="gold"]'); gold.hidden = n !== total;
   }
