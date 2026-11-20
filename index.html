@@ -294,6 +294,44 @@
   .parcel::after { content: ""; position: absolute; left: 40%; width: 20%; top: 0; height: 40%; border: solid var(--ink); border-width: 0 1.5px 1.5px; }
   .parcel.dark { background: var(--ink); }
 
+  /* ───────── passport, stamps, lost parcels ───────── */
+  :root[data-ink="gold"] { --ink: #8F6400; }
+  :root[data-night][data-ink="gold"] { --ink: #F2C95C; }
+  section { position: relative; }
+  .stamp-btn { font: inherit; letter-spacing: inherit; text-transform: uppercase; color: var(--paper); background: var(--ink); border: 0; border-radius: 999px; padding: 5px 13px; cursor: pointer; white-space: nowrap; max-width: 38vw; overflow: hidden; text-overflow: ellipsis; flex: none; }
+  @media (max-width: 1100px) { #stamp-next { display: none; } }
+  .stamp-btn b { font-weight: 500; }
+  .stamp-btn span { opacity: .85; }
+  .stamp-btn.bump { animation: bump .5s cubic-bezier(.3,1.8,.5,1); }
+  @keyframes bump { 40% { transform: scale(1.18) rotate(-3deg); } }
+  .passport { position: fixed; right: 16px; bottom: 56px; z-index: 82; width: min(380px, calc(100vw - 32px)); margin: 0; overflow: hidden; background: var(--paper); animation: unfold .3s ease; }
+  .pp-x { margin-left: auto; border: 0; background: none; color: var(--ink); font-size: 22px; line-height: 1; cursor: pointer; padding: 0 2px; }
+  .pp-body { padding: 14px 16px 16px; max-height: min(64vh, 520px); overflow-y: auto; }
+  .pp-rank { margin: 0 0 8px; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; }
+  .pp-rank b { font-family: var(--display); font-weight: 800; font-size: 19px; letter-spacing: 0; text-transform: none; }
+  .pp-bar { height: 10px; border: 1.5px solid var(--ink); border-radius: 99px; overflow: hidden; }
+  .pp-bar i { display: block; height: 100%; width: 0; background: var(--ink); transition: width .6s cubic-bezier(.2,.8,.2,1); }
+  .pp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 8px; margin-top: 14px; }
+  .pp-stamp { border: 0; background: none; color: var(--ink); font: inherit; padding: 0; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .pp-stamp .ring { width: 54px; height: 54px; border-radius: 50%; border: 2px dashed var(--ink); display: grid; place-items: center; font-size: 22px; opacity: .45; transition: transform .2s; }
+  .pp-stamp:hover .ring { transform: scale(1.08) rotate(-6deg); }
+  .pp-stamp.got .ring { border-style: solid; background: var(--ink); color: var(--paper); opacity: 1; transform: rotate(-9deg); box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--ink); }
+  .pp-stamp b { font-family: var(--display); font-weight: 700; font-size: 13.5px; line-height: 1.1; }
+  .pp-stamp small { font-size: 11.5px; line-height: 1.25; opacity: .8; }
+  .pp-stamp.got small { display: none; }
+  .pp-foot { margin: 14px 0 0; font-size: 14.5px; line-height: 1.4; }
+  .pp-foot button { font: inherit; color: inherit; background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; opacity: .7; }
+  .toast { position: fixed; left: 50%; top: 66px; z-index: 96; translate: -50% -140%; opacity: 0; max-width: calc(100vw - 32px); pointer-events: none;
+    background: var(--ink); color: var(--paper); border-radius: 999px; padding: 10px 22px; font-size: 16px; text-align: center; transition: translate .45s cubic-bezier(.3,1.5,.5,1), opacity .3s; }
+  .toast.show { translate: -50% 0; opacity: 1; }
+  .toast b { font-family: var(--display); font-weight: 800; }
+  .lost { position: absolute; z-index: 3; width: 24px; height: 21px; padding: 0; border: 2px solid var(--ink); border-radius: 3px; background: var(--paper-2); cursor: pointer; opacity: .6; rotate: var(--t, 0deg); animation: peek 4s ease-in-out infinite; transition: opacity .2s, scale .2s; }
+  .lost::after { content: ""; position: absolute; left: 38%; width: 24%; top: 0; height: 42%; border: solid var(--ink); border-width: 0 1.5px 1.5px; }
+  .lost:hover, .lost:focus-visible { opacity: 1; scale: 1.35; }
+  .lost.found { animation: found .5s forwards; pointer-events: none; }
+  @keyframes peek { 0%, 86%, 100% { transform: none; } 90% { transform: translateY(-5px) rotate(-10deg); } 95% { transform: translateY(0) rotate(8deg); } }
+  @keyframes found { to { transform: translateY(-40px) rotate(200deg) scale(0); opacity: 0; } }
+
   /* ───────── night shift ───────── */
   :root[data-night] { --paper: #0D1022; --paper-2: #171B38; --ink: #AEBBFF; }
   :root[data-night][data-ink="forest"] { --ink: #8FE0B8; }
@@ -364,7 +402,7 @@
   @media print {
     :root, :root[data-night], :root[data-ink] { --ink: #111 !important; --paper: #fff !important; --paper-2: #fff !important; }
     body { font-size: 10.5pt; padding: 0; }
-    body::before, .nav, .tracker, .agent-ui, .agent-cursor, #play, #ask, #toolbox, #roll, .clients, .curious, .scroll-cue, .psst, .mascot, .hero-cta,
+    body::before, .nav, .tracker, .passport, .toast, .lost, .agent-ui, .agent-cursor, #play, #ask, #toolbox, #roll, .clients, .curious, .scroll-cue, .psst, .mascot, .hero-cta,
     .route-wrap, .scene, .wavebot, .contact .btns, .stats, .job .plus, footer, #career .sec-sub, .parcel { display: none !important; }
     .print-only { display: block; margin-top: 6pt; font-size: 10pt; }
     .reveal { opacity: 1 !important; transform: none !important; }
@@ -409,6 +447,8 @@
     .pile { gap: 16px 14px; }
     .game { padding: 18px 16px 20px; }
     .navbtn span { display: none; }
+    #stamp-next, .tracker .status { display: none; }
+    .tracker .lane { min-width: 40px; }
     .nav ul { gap: 9px; }
     .wh-stats { grid-template-columns: repeat(2, 1fr); }
     .route-cap { font-size: 17px; }
@@ -451,6 +491,7 @@
       <button style="--c:#0C5B3F" data-ink="forest" aria-label="Forest ink" aria-pressed="false"></button>
       <button style="--c:#CF3A17" data-ink="vermilion" aria-label="Vermilion ink" aria-pressed="false"></button>
       <button style="--c:#5A2178" data-ink="plum" aria-label="Plum ink" aria-pressed="false"></button>
+      <button style="--c:#A8770A" data-ink="gold" aria-label="Golden ink (reward)" aria-pressed="false" hidden></button>
     </li>
   </ul>
 </header>
@@ -490,6 +531,7 @@
       <p class="print-only">Balwant Singh · Product &amp; Engineering · Bengaluru, India · linkedin.com/in/balwantsinghblr</p>
     </div>
     <a class="scroll-cue" href="#manifesto">scroll ↓</a>
+    <button class="lost" data-lost="a" type="button" aria-label="A lost parcel" style="right:7%;bottom:22%;--t:-12deg"></button>
   </section>
 
   <!-- ══════════ MANIFESTO ══════════ -->
@@ -570,6 +612,7 @@
       </div>
     </div>
 
+    <button class="lost" data-lost="b" type="button" aria-label="A lost parcel" style="left:2%;bottom:36px;--t:9deg"></button>
     <div class="stats reveal">
       <div class="stat"><b>15+</b><span>years in supply chain</span></div>
       <div class="stat"><b>6</b><span>industries</span></div>
@@ -652,6 +695,7 @@
 
   <!-- ══════════ CAREER ══════════ -->
   <section class="wrap" id="career" data-status="Sorting facility · career log">
+    <button class="lost" data-lost="c" type="button" aria-label="A lost parcel" style="right:5%;top:64px;--t:14deg"></button>
     <h2 class="sec-title reveal">The career log</h2>
     <p class="sec-sub reveal">From ERP support desks to agentic AI. Keep scrolling and the parcel makes the trip.</p>
     <div class="route-wrap" id="route-wrap">
@@ -743,6 +787,7 @@
     <h2 class="sec-title reveal">From my toolbox</h2>
     <p class="sec-sub reveal">Drag them around, or click one to flip it over.</p>
     <div class="pile reveal" id="pile"></div>
+    <button class="lost" data-lost="d" type="button" aria-label="A lost parcel" style="left:5%;bottom:26px;--t:-8deg"></button>
   </section>
 
   <!-- ══════════ COPILOT ══════════ -->
@@ -790,6 +835,7 @@
         <g class="wave-arm"><path class="draw" d="M94 98 q18 -6 22 -28"/><circle class="draw fill-paper" cx="117" cy="64" r="6"/></g>
       </g>
     </svg>
+    <button class="lost" data-lost="e" type="button" aria-label="A lost parcel" style="right:14%;top:70px;--t:20deg"></button>
     <h2 class="reveal">Say hi<span class="wave">.</span></h2>
     <p class="reveal">Building something agentic for manufacturing, supply chain, retail or procurement? I'd love to hear about it.</p>
     <div class="btns reveal">
@@ -812,10 +858,22 @@
 </div>
 <svg class="agent-cursor" id="agent-cursor" viewBox="0 0 30 34" aria-hidden="true" hidden><path d="M4 3 L4 27 L11 21 L16 32 L20 30 L15 19 L25 19 Z" class="draw fill-ink" style="stroke:var(--paper);stroke-width:2"/></svg>
 
-<div class="tracker" id="tracker" aria-hidden="true">
+<aside class="passport card" id="passport" aria-label="Delivery passport" hidden>
+  <div class="chat-bar"><i></i><i></i><i></i><span>delivery passport</span><button class="pp-x" id="passport-x" type="button" aria-label="Close passport">×</button></div>
+  <div class="pp-body">
+    <p class="pp-rank">Rank: <b id="pp-rank">Trainee packer</b></p>
+    <div class="pp-bar"><i id="pp-fill"></i></div>
+    <div class="pp-grid" id="pp-grid"></div>
+    <p class="pp-foot" id="pp-foot"></p>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="tracker" id="tracker">
   <span class="tid">Tracking BS-2011-2026</span>
   <span class="lane"><svg class="truck" viewBox="0 0 40 24"><rect class="draw fill-ink" x="2" y="4" width="22" height="13" rx="2" style="stroke-width:2"/><path class="draw fill-paper" style="stroke-width:2" d="M24 8 h7 l6 5 v4 h-13 z"/><circle class="draw fill-paper" style="stroke-width:2" cx="10" cy="19" r="3.2"/><circle class="draw fill-paper" style="stroke-width:2" cx="31" cy="19" r="3.2"/></svg></span>
   <span class="status" id="t-status">Label created · Bengaluru</span>
+  <button class="stamp-btn" id="stamp-btn" type="button" aria-expanded="false" aria-controls="passport">★ <b id="stamp-n">0</b>/12<span id="stamp-next"></span></button>
 </div>
 
 <script>
@@ -839,7 +897,7 @@
     inkBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.ink === name)); });
     try { localStorage.setItem('ink', name); } catch (e) {}
   }
-  inkBtns.forEach(function (b) { b.addEventListener('click', function () { setInk(b.dataset.ink); }); });
+  inkBtns.forEach(function (b) { b.addEventListener('click', function () { setInk(b.dataset.ink); award('ink'); }); });
   try { var saved = localStorage.getItem('ink'); if (saved) setInk(saved); } catch (e) {}
 
   /* ── eyes follow the pointer ── */
@@ -920,14 +978,14 @@
       down = false; b.classList.remove('dragging');
       b.style.setProperty('--x', ox + 'px'); b.style.setProperty('--y', oy + 'px');
     });
-    b.addEventListener('click', function () { if (!moved) { b.classList.toggle('flipped'); blip(520); } moved = false; });
+    b.addEventListener('click', function () { if (!moved) { b.classList.toggle('flipped'); blip(520); flipCount(); } moved = false; });
   });
 
   /* ── poke the mascot: it spills parcels ── */
   var mascot = document.getElementById('mascot');
   var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function poke() {
-    mascot.classList.remove('poked'); void mascot.getBoundingClientRect(); mascot.classList.add('poked'); blip(330); setTimeout(function () { blip(494); }, 90);
+    mascot.classList.remove('poked'); void mascot.getBoundingClientRect(); mascot.classList.add('poked'); award('poke'); blip(330); setTimeout(function () { blip(494); }, 90);
     if (calm || !mascot.animate) return;
     var r = mascot.getBoundingClientRect();
     for (var i = 0; i < 16; i++) (function (i) {
@@ -1043,7 +1101,7 @@
       } else if (state === 'reveal') {
         hist.push(reveal.actual); reveal = null;
         if (round === ROUNDS) {
-          state = 'done'; var d = agent - you;
+          state = 'done'; var d = agent - you; award('forecast'); if (d > 0) award('beat');
           msg.innerHTML = d > 0 ? 'You beat the agent by <b>' + d + '</b> units. Planners like you are why copilots need a human in the loop.'
             : d < 0 ? 'The agent wins by <b>' + (-d) + '</b> units, and it never gets tired. That is why I build them.'
             : 'A perfect tie. Human and agent, working as designed.';
@@ -1087,7 +1145,7 @@
     function wait(ms) { return new Promise(function (r) { setTimeout(r, calm ? 0 : ms); }); }
     async function answer(q, item) {
       if (busy) return; busy = true;
-      add('msg user', q);
+      add('msg user', q); award('copilot');
       var tr = add('trace', '▸ planning');
       await wait(420); tr.textContent += '\n▸ retrieving ' + item.src; log.scrollTop = log.scrollHeight;
       await wait(520); tr.textContent += '\n▸ drafting answer'; log.scrollTop = log.scrollHeight;
@@ -1159,13 +1217,13 @@
     nightBtn.setAttribute('aria-pressed', String(on)); nightBtn.textContent = on ? '☀' : '☾';
     try { localStorage.setItem('night', on ? '1' : ''); } catch (e) {}
   }
-  nightBtn.addEventListener('click', function () { setNight(!root.hasAttribute('data-night')); blip(392); });
+  nightBtn.addEventListener('click', function () { setNight(!root.hasAttribute('data-night')); blip(392); award('night'); });
   try { if (localStorage.getItem('night')) setNight(true); } catch (e) {}
 
   /* ── delivered: parcels rain once when you reach the end ── */
   var delivered = false;
   function deliver() {
-    if (delivered) return; delivered = true;
+    if (delivered) return; delivered = true; award('delivered');
     blip(523); setTimeout(function () { blip(659); }, 120); setTimeout(function () { blip(784, .3); }, 240);
     if (calm || !document.body.animate) return;
     for (var i = 0; i < 28; i++) (function (i) {
@@ -1263,6 +1321,7 @@
       if (n !== last) {
         stns.forEach(function (s, i) { s.g.classList.toggle('on', i <= n); });
         if (n > last && last > -2 && n >= 0) blip(660 + n * 60);
+        if (n === stns.length - 1 && last > -2) award('route');
         last = n; cap.textContent = '';
         if (n >= 0) { var b = document.createElement('b'); b.textContent = stns[n].y + ' · ' + stns[n].co + '. '; cap.appendChild(b); cap.appendChild(document.createTextNode(stns[n].role + (n < stns.length - 1 ? ' Keep scrolling ↓' : ' Delivered.'))); }
         else cap.textContent = 'Scroll to send the parcel on its way ↓';
@@ -1328,7 +1387,7 @@
       week++;
       if (week > WEEKS) {
         done = true; slider.disabled = true; btn.textContent = 'Play again';
-        var vd = variance(D), bw = vd ? (variance(me.orders) / vd).toFixed(1) : '–', ba = vd ? (variance(ai.orders) / vd).toFixed(1) : '–', diff = ai.cost - me.cost;
+        var vd = variance(D), bw = vd ? (variance(me.orders) / vd).toFixed(1) : '–', ba = vd ? (variance(ai.orders) / vd).toFixed(1) : '–', diff = ai.cost - me.cost; award('warehouse'); if (diff > 0) award('beat');
         msg.innerHTML = (diff > 0 ? 'You win by <b>' + diff + '</b>.' : diff < 0 ? 'The agent wins by <b>' + (-diff) + '</b>.' : 'A dead heat.') +
           ' Your orders swung <b>' + bw + '×</b> as hard as demand; the agent\'s swung <b>' + ba + '×</b>. Anything over 1× is the bullwhip effect.';
         hud(); draw(); return;
@@ -1365,7 +1424,7 @@
       document.querySelectorAll('.agent-hl').forEach(function (e) { e.classList.remove('agent-hl'); });
     }
     async function tour() {
-      var me = ++run; active = true; trace.textContent = ''; ui.hidden = false; cursor.removeAttribute('hidden');
+      award('tour'); var me = ++run; active = true; trace.textContent = ''; ui.hidden = false; cursor.removeAttribute('hidden');
       cursor.style.transform = 'translate(' + innerWidth / 2 + 'px,' + innerHeight / 2 + 'px)';
       btns.forEach(function (b) { b.setAttribute('aria-pressed', 'true'); });
       var steps = [
@@ -1387,6 +1446,108 @@
     window.addEventListener('keydown', function (e) { if (e.key === 'Escape') stop(); });
     window.addEventListener('wheel', stop, { passive: true }); window.addEventListener('touchmove', stop, { passive: true });
   })();
+
+  /* ── delivery passport: stamps for everything worth finding ── */
+  var STAMPS = [
+    { id: 'poke', icon: '◉', name: 'Box poker', hint: 'Poke the box at the top', go: '#mascot' },
+    { id: 'ink', icon: '✎', name: 'Ink mixer', hint: 'Change the ink colour', go: '.inks' },
+    { id: 'night', icon: '☾', name: 'Night shift', hint: 'Turn the lights off', go: '#night-btn' },
+    { id: 'tour', icon: '▶', name: 'Passenger', hint: 'Start agent mode', go: '#agent-btn' },
+    { id: 'forecast', icon: '↗', name: 'Forecaster', hint: 'Finish the forecast game', go: '#play' },
+    { id: 'warehouse', icon: '▦', name: 'Warehouse boss', hint: 'Finish the warehouse game', go: '#play' },
+    { id: 'beat', icon: '♛', name: 'Agent beater', hint: 'Beat the agent at either game', go: '#play' },
+    { id: 'route', icon: '➜', name: 'Frequent flyer', hint: 'Ride the career route to 2024', go: '#career' },
+    { id: 'cards', icon: '▤', name: 'Label reader', hint: 'Flip three toolbox cards', go: '#toolbox' },
+    { id: 'copilot', icon: '?', name: 'Good question', hint: 'Ask the copilot anything', go: '#ask' },
+    { id: 'parcels', icon: '⬚', name: 'Lost & found', hint: 'Find the 5 lost parcels', go: '#top' },
+    { id: 'delivered', icon: '✓', name: 'Signed for', hint: 'Reach the end of the page', go: '#hi' }
+  ];
+  var RANKS = [[12, 'Supply chain legend'], [9, 'Control tower'], [6, 'Demand planner'], [3, 'Dispatcher'], [0, 'Trainee packer']];
+  var pp = null, ppReady = false, toastT = 0;
+  function ppLoad() {
+    if (!pp) { try { pp = JSON.parse(localStorage.getItem('passport')); } catch (e) {} pp = pp || {}; pp.s = pp.s || {}; pp.p = pp.p || {}; pp.flips = pp.flips || 0; }
+    return pp;
+  }
+  function ppSave() { try { localStorage.setItem('passport', JSON.stringify(pp)); } catch (e) {} }
+  function ppCount() { var st = ppLoad(); return STAMPS.filter(function (x) { return st.s[x.id]; }).length; }
+  function toast(html, ms) {
+    var t = $('toast'); t.innerHTML = html; t.classList.add('show');
+    clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('show'); }, ms || 3200);
+  }
+  function rain(n) {
+    if (calm || !document.body.animate) return;
+    for (var i = 0; i < n; i++) (function (i) {
+      var d = document.createElement('div'); d.className = 'parcel' + (i % 3 === 0 ? ' dark' : '');
+      d.style.left = (Math.random() * (innerWidth - 30)) + 'px'; d.style.top = '-30px'; document.body.appendChild(d);
+      d.animate([{ transform: 'translateY(0) rotate(0)' }, { transform: 'translateY(' + (innerHeight + 80) + 'px) rotate(' + ((Math.random() - .5) * 700) + 'deg)' }],
+        { duration: 1500 + Math.random() * 1500, delay: Math.random() * 900, easing: 'cubic-bezier(.4,0,.9,.6)', fill: 'both' }).onfinish = function () { d.remove(); };
+    })(i);
+  }
+  function award(id) {
+    var st = ppLoad(); if (st.s[id]) return; st.s[id] = 1;
+    if (!ppReady) return;
+    ppSave(); ppRender();
+    var def = STAMPS.filter(function (x) { return x.id === id; })[0], n = ppCount();
+    var b = $('stamp-btn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+    blip(784); setTimeout(function () { blip(1047, .2); }, 100);
+    if (n === STAMPS.length) {
+      setTimeout(function () { toast('★ <b>Passport complete.</b> Golden ink unlocked. You are a supply chain legend.', 6000); rain(40); openPassport(true); }, 900);
+      toast('★ Stamp collected: <b>' + def.name + '</b> · ' + n + '/' + STAMPS.length);
+    } else toast('★ Stamp collected: <b>' + def.name + '</b> · ' + n + '/' + STAMPS.length);
+  }
+  function flipCount() { var st = ppLoad(); st.flips++; if (st.flips >= 3) award('cards'); ppSave(); }
+  function openPassport(on) { $('passport').hidden = !on; $('stamp-btn').setAttribute('aria-expanded', String(on)); }
+  function ppRender() {
+    var st = ppLoad(), n = ppCount(), total = STAMPS.length, grid = $('pp-grid');
+    var next = STAMPS.filter(function (x) { return !st.s[x.id]; })[0];
+    $('stamp-n').textContent = n;
+    $('stamp-next').textContent = next ? ' · Next: ' + next.hint : ' · Complete';
+    $('pp-rank').textContent = RANKS.filter(function (r) { return n >= r[0]; })[0][1];
+    $('pp-fill').style.width = (n / total * 100) + '%';
+    grid.textContent = '';
+    STAMPS.forEach(function (x) {
+      var got = !!st.s[x.id], b = document.createElement('button'); b.type = 'button'; b.className = 'pp-stamp' + (got ? ' got' : '');
+      var ring = document.createElement('span'); ring.className = 'ring'; ring.textContent = got ? x.icon : '?';
+      var nm = document.createElement('b'); nm.textContent = got ? x.name : '???';
+      var hint = document.createElement('small'); hint.textContent = x.id === 'parcels' ? x.hint + ' (' + Object.keys(st.p).length + '/5)' : x.hint;
+      b.appendChild(ring); b.appendChild(nm); b.appendChild(hint);
+      b.setAttribute('aria-label', got ? x.name + ', collected' : 'Locked. ' + x.hint);
+      b.addEventListener('click', function () { var el = document.querySelector(x.go); openPassport(false); if (el) el.scrollIntoView({ block: 'center', behavior: calm ? 'auto' : 'smooth' }); });
+      grid.appendChild(b);
+    });
+    var foot = $('pp-foot'); foot.textContent = '';
+    if (n === total) {
+      foot.appendChild(document.createTextNode('You found everything, which tells me you are curious. So am I. '));
+      var a = document.createElement('a'); a.href = 'https://www.linkedin.com/in/balwantsinghblr/'; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Let us talk ↗'; foot.appendChild(a);
+      foot.appendChild(document.createTextNode(' '));
+    } else foot.appendChild(document.createTextNode('Tap a locked stamp to jump to it. Collect all ' + total + ' to unlock a reward. '));
+    var rs = document.createElement('button'); rs.type = 'button'; rs.textContent = 'Start over';
+    rs.addEventListener('click', function () { pp = { s: {}, p: {}, flips: 0 }; ppSave(); document.querySelectorAll('.lost').forEach(function (l) { l.hidden = false; l.classList.remove('found'); }); if (root.getAttribute('data-ink') === 'gold') setInk('cobalt'); ppRender(); });
+    foot.appendChild(rs);
+    var gold = document.querySelector('.inks [data-ink="gold"]'); gold.hidden = n !== total;
+  }
+  $('stamp-btn').addEventListener('click', function () { openPassport($('passport').hidden); blip(587); });
+  $('passport-x').addEventListener('click', function () { openPassport(false); });
+  window.addEventListener('keydown', function (e) { if (e.key === 'Escape') openPassport(false); });
+  document.querySelectorAll('.lost').forEach(function (l) {
+    if (ppLoad().p[l.dataset.lost]) { l.hidden = true; return; }
+    l.addEventListener('click', function () {
+      var st = ppLoad(); if (st.p[l.dataset.lost]) return; st.p[l.dataset.lost] = 1; ppSave();
+      l.classList.add('found'); setTimeout(function () { l.hidden = true; }, 520);
+      var k = Object.keys(st.p).length; blip(880);
+      if (k >= 5) award('parcels'); else { toast('You found a lost parcel. <b>' + k + '/5</b>'); ppRender(); }
+    });
+  });
+  ppReady = true; ppSave(); ppRender();
+  /* a gentle nudge for first-time visitors, and one for people about to leave */
+  setTimeout(function () { if (ppCount() === 0 && scrollY < innerHeight) toast('Psst. There are <b>12 stamps</b> hidden in this page. Start by poking the box.', 5200); }, 4500);
+  var exitShown = false;
+  document.addEventListener('mouseout', function (e) {
+    if (exitShown || e.relatedTarget || e.clientY > 0) return;
+    var left = STAMPS.length - ppCount(); if (!left) return; exitShown = true;
+    var st = ppLoad(), next = STAMPS.filter(function (x) { return !st.s[x.id]; })[0];
+    toast('Leaving already? <b>' + left + ' stamp' + (left > 1 ? 's' : '') + '</b> still out there. Next: ' + next.hint.toLowerCase() + '.', 5200);
+  });
 
   /* ── reveal on scroll ── */
   var items = document.querySelectorAll('.reveal');
