@@ -1,0 +1,1404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balwant Singh — Agentic AI for supply chains</title>
+<meta name="description" content="Balwant Singh builds autonomous, agentic AI platforms for manufacturing, supply chain, retail and procurement. 15+ years across Blue Yonder, SymphonyAI, o9 Solutions, Levi Strauss & Co. and QAD.">
+<meta property="og:title" content="Balwant Singh — Agentic AI for supply chains">
+<meta property="og:description" content="Supply chains power the world. I build the intelligent, agentic platforms that power them.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FBF5E9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FBF5E9'/%3E%3Cellipse cx='23' cy='32' rx='9' ry='13' fill='none' stroke='%231B3BDB' stroke-width='4'/%3E%3Cellipse cx='43' cy='32' rx='9' ry='13' fill='none' stroke='%231B3BDB' stroke-width='4'/%3E%3Ccircle cx='26' cy='30' r='4' fill='%231B3BDB'/%3E%3Ccircle cx='46' cy='30' r='4' fill='%231B3BDB'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FBF5E9;
+    --paper-2: #F7EBD5;
+    --ink: #1B3BDB;
+    --display: "Bricolage Grotesque", "Outfit", system-ui, sans-serif;
+    --body: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --hand: "Caveat", "Bradley Hand", cursive;
+    --wrap: 1080px;
+  }
+  :root[data-ink="forest"]    { --ink: #0C5B3F; }
+  :root[data-ink="vermilion"] { --ink: #CF3A17; }
+  :root[data-ink="plum"]      { --ink: #5A2178; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: color .4s ease;
+  }
+  ::selection { background: var(--ink); color: var(--paper); }
+  a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px dashed var(--ink); outline-offset: 4px; border-radius: 6px;
+  }
+  h1, h2, h3 { font-family: var(--display); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; margin: 0; }
+  p { margin: 0 0 .7em; }
+  svg { display: block; }
+  .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  .draw { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .fill-ink { fill: var(--ink); }
+  .fill-paper { fill: var(--paper); }
+  .fill-paper-2 { fill: var(--paper-2); }
+
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 100; pointer-events: none; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4  0 0 0 0 .28  0 0 0 0 .1  0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .squig { position: relative; white-space: nowrap; }
+  .squig svg { position: absolute; left: -2%; width: 104%; bottom: -.2em; height: .26em; overflow: visible; }
+  .squig path { vector-effect: non-scaling-stroke; stroke-width: 3; }
+  .js .scene .draw:not(.route) { stroke-dasharray: 1 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s cubic-bezier(.5,0,.2,1) .15s; }
+  .js .scene.in .draw:not(.route) { stroke-dashoffset: 0; }
+  .arm { transform-box: view-box; transform-origin: 499px 150px; animation: lift 5s ease-in-out infinite; }
+  @keyframes lift { 50% { transform: rotate(2.2deg); } }
+  .tube-o { fill: none; stroke: var(--ink); stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; }
+  .tube-i { fill: none; stroke: var(--paper); stroke-width: 8.5; stroke-linecap: round; stroke-linejoin: round; }
+  .wavebot { width: 128px; margin: 0 auto 10px; overflow: visible; }
+  .wavebot .wave-arm { transform-box: view-box; transform-origin: 94px 98px; animation: hello 2.4s ease-in-out infinite; }
+  @keyframes hello { 0%, 55%, 100% { transform: rotate(0); } 12%, 36% { transform: rotate(-16deg); } 24%, 48% { transform: rotate(12deg); } }
+
+  /* ───────── nav ───────── */
+  .nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 24px;
+    font-size: 15px; letter-spacing: .04em; text-transform: uppercase;
+    background: linear-gradient(var(--paper) 55%, transparent);
+    pointer-events: none;
+  }
+  .nav > * { pointer-events: auto; }
+  .nav .mark { font-family: var(--display); font-weight: 800; font-size: 20px; text-decoration: none; letter-spacing: -0.02em; text-transform: none; }
+  .nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; align-items: center; }
+  .nav ul a { text-decoration: none; }
+  .nav ul a:hover { text-decoration: underline; }
+  .inks { display: flex; gap: 7px; align-items: center; margin-left: 6px; }
+  .inks button {
+    width: 16px; height: 16px; border-radius: 50%; padding: 0; cursor: pointer;
+    border: 2px solid var(--paper); background: var(--c);
+    box-shadow: 0 0 0 1.5px var(--c); transition: transform .2s;
+  }
+  .inks button:hover { transform: scale(1.25); }
+  .inks button[aria-pressed="true"] { transform: scale(1.25); }
+
+  /* ───────── hero ───────── */
+  .hero { min-height: 100svh; display: grid; align-items: center; padding-top: 110px; padding-bottom: 70px; position: relative; }
+  .hero-inner { max-width: 640px; margin-left: clamp(0px, 22vw, 330px); position: relative; }
+  .mascot { width: 118px; margin: 0 0 6px -8px; overflow: visible; }
+  .eyes { transform-origin: 60px 36px; animation: blink 5.5s infinite; }
+  @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 96.5% { transform: scaleY(.08); } }
+  .hero h1 { font-size: clamp(46px, 8vw, 84px); }
+  .hero .lede { margin-top: 30px; max-width: 30em; font-size: clamp(18px, 2.1vw, 21px); }
+  .psst {
+    position: absolute; left: 132px; top: 8px;
+    font-family: var(--hand); font-size: 23px; font-weight: 500; line-height: 1;
+    transform: rotate(-5deg); white-space: nowrap; display: flex; gap: 6px; align-items: flex-end;
+  }
+  .psst svg { width: 38px; height: 30px; margin-bottom: -12px; }
+  .scroll-cue {
+    position: absolute; left: 50%; bottom: 26px; translate: -50% 0;
+    font-family: var(--hand); font-size: 21px; text-decoration: none;
+    animation: bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob { 50% { transform: translateY(7px); } }
+
+  /* ───────── shared ───────── */
+  section { padding-top: 90px; padding-bottom: 90px; }
+  .sec-title { font-size: clamp(32px, 4.6vw, 48px); text-align: center; }
+  .sec-sub { text-align: center; margin: 14px auto 0; max-width: 34em; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--ink); border-radius: 999px;
+    padding: 11px 26px; font: 400 16px/1 var(--body); letter-spacing: .06em; text-transform: uppercase;
+    text-decoration: none; color: var(--ink); background: transparent; cursor: pointer;
+    transition: background .2s, color .2s, transform .2s;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px) rotate(-1deg); }
+  .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* ───────── manifesto ───────── */
+  .manifesto .grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; }
+  .manifesto h2 { font-size: clamp(32px, 4.4vw, 50px); }
+  .manifesto p { margin-top: 22px; max-width: 26em; }
+  .manifesto .btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .scene { width: 100%; max-width: 520px; margin: 0 auto; overflow: visible; }
+  .roller { transform-box: fill-box; transform-origin: center; animation: spin 3.2s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .float-a { animation: floaty 4.5s ease-in-out infinite; }
+  .float-b { animation: floaty 5.5s ease-in-out -2s infinite; }
+  @keyframes floaty { 50% { transform: translateY(-9px) rotate(1.5deg); } }
+  .route { stroke-dasharray: 3 10; animation: march 1.4s linear infinite; }
+  @keyframes march { to { stroke-dashoffset: -26; } }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 80px; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+  .stat { padding: 26px 12px; text-align: center; }
+  .stat + .stat { border-left: 1.5px solid var(--ink); }
+  .stat b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5vw, 54px); line-height: 1; letter-spacing: -0.03em; }
+  .stat span { display: block; margin-top: 8px; font-size: 15px; letter-spacing: .05em; text-transform: uppercase; }
+
+  /* ───────── rows (shipped + career) ───────── */
+  .rows { margin-top: 54px; border-top: 1.5px solid var(--ink); }
+  .row {
+    display: grid; grid-template-columns: 300px 1fr 150px; gap: 24px; align-items: baseline;
+    padding: 15px 6px; border-bottom: 1.5px solid var(--ink);
+    transition: background .2s, color .2s, padding .2s;
+  }
+  .row:hover { background: var(--ink); color: var(--paper); padding-left: 16px; padding-right: 16px; }
+  .row .name { font-size: clamp(20px, 2.4vw, 25px); font-weight: 400; }
+  .row .tag { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; text-align: right; }
+  .after-rows { text-align: center; margin-top: 30px; }
+
+  details.job { border-bottom: 1.5px solid var(--ink); }
+  details.job summary {
+    list-style: none; cursor: pointer;
+    display: grid; grid-template-columns: 124px minmax(160px, 1fr) 1.5fr 26px; gap: 22px; align-items: baseline;
+    padding: 17px 6px; transition: background .2s, color .2s, padding .2s;
+  }
+  details.job summary::-webkit-details-marker { display: none; }
+  details.job summary:hover { background: var(--ink); color: var(--paper); padding-left: 16px; padding-right: 16px; }
+  .job .yrs { font-size: 14px; letter-spacing: .06em; white-space: nowrap; }
+  .job .co { font-family: var(--display); font-weight: 700; font-size: clamp(20px, 2.4vw, 25px); letter-spacing: -0.01em; }
+  .job .plus { font-size: 24px; line-height: 1; justify-self: end; transition: transform .3s; font-weight: 300; }
+  details[open].job .plus { transform: rotate(45deg); }
+  .job .more { padding: 4px 6px 26px 152px; max-width: 880px; animation: unfold .4s ease; }
+  @keyframes unfold { from { opacity: 0; transform: translateY(-6px); } }
+  .job .more ul { margin: 0; padding-left: 1.1em; }
+  .job .more li { margin-bottom: .45em; }
+  .job .more li::marker { content: "✦  "; font-size: .7em; }
+  .award { display: inline-block; margin-top: 10px; font-family: var(--hand); font-size: 23px; transform: rotate(-1.5deg); }
+
+  /* ───────── clients marquee ───────── */
+  .clients { padding-top: 50px; padding-bottom: 50px; }
+  .clients .label { text-align: center; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 20px; }
+  .marquee { overflow: hidden; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); padding: 18px 0; transform: rotate(-1.2deg) scale(1.02); }
+  .track { display: flex; width: max-content; animation: slide 46s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .track span { font-family: var(--display); font-weight: 800; font-size: clamp(26px, 4vw, 44px); letter-spacing: -0.02em; white-space: nowrap; padding: 0 20px; }
+  .track span:nth-child(even) { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+  .track i { font-style: normal; align-self: center; font-size: 20px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ───────── toolbox (draggable labels) ───────── */
+  .pile { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px 26px; margin-top: 56px; padding: 0 0 20px; }
+  .label-card {
+    --x: 0px; --y: 0px; --r: 0deg;
+    width: 232px; height: 176px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left;
+    position: relative; cursor: grab; perspective: 900px; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+    transform: translate(var(--x), var(--y)) rotate(var(--r));
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .label-card.dragging { cursor: grabbing; transition: none; z-index: 30; }
+  .label-card .inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.3,.8,.3,1); }
+  .label-card.flipped .inner { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border: 2px solid var(--ink); border-radius: 12px; background: var(--paper-2);
+    box-shadow: 0 6px 0 -2px color-mix(in srgb, var(--ink) 22%, transparent);
+    padding: 14px 16px; display: flex; flex-direction: column;
+  }
+  .label-card.dragging .face { box-shadow: 0 18px 22px -8px color-mix(in srgb, var(--ink) 35%, transparent); }
+  .face.back { transform: rotateY(180deg); background: var(--ink); color: var(--paper); justify-content: center; font-size: 16px; line-height: 1.4; }
+  .face .top { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; border-bottom: 1.5px dashed var(--ink); padding-bottom: 8px; }
+  .face h3 { font-size: 23px; margin-top: 14px; flex: 1; }
+  .barcode { height: 24px; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 6px, transparent 6px 10px, var(--ink) 10px 14px, transparent 14px 17px); opacity: .9; }
+
+  /* ───────── curious ───────── */
+  .curious .cloud { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 14px; margin: 44px auto 0; max-width: 820px; }
+  .chip { border: 1.5px solid var(--ink); border-radius: 999px; padding: 9px 20px; font-size: 17px; transition: transform .25s, background .2s, color .2s; }
+  .chip:nth-child(odd) { transform: rotate(-1.6deg); }
+  .chip:nth-child(even) { transform: rotate(1.4deg); }
+  .chip:hover { background: var(--ink); color: var(--paper); transform: rotate(0) scale(1.06); }
+
+  /* ───────── contact ───────── */
+  .contact { text-align: center; padding-top: 110px; padding-bottom: 60px; }
+  .contact h2 { font-size: clamp(64px, 15vw, 190px); letter-spacing: -0.045em; line-height: .9; }
+  .contact h2 .wave { display: inline-block; transform-origin: 70% 80%; animation: wave 2.6s ease-in-out infinite; }
+  @keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(14deg); } 20%, 40% { transform: rotate(-8deg); } }
+  .contact p { margin: 28px auto 0; max-width: 28em; }
+  .contact .btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 26px 24px 34px; font-size: 14px; letter-spacing: .05em; text-transform: uppercase; max-width: var(--wrap); margin: 0 auto; }
+
+  /* ───────── game ───────── */
+  .card {
+    margin: 48px auto 0; max-width: 820px; border: 2px solid var(--ink); border-radius: 18px; background: var(--paper-2);
+    box-shadow: 0 8px 0 -2px color-mix(in srgb, var(--ink) 22%, transparent);
+  }
+  .game { padding: 22px 26px 24px; }
+  .game-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  .game-top b { font-family: var(--display); font-weight: 800; font-size: 17px; letter-spacing: 0; }
+  #chart { width: 100%; height: auto; margin: 10px 0 4px; overflow: visible; }
+  #chart text { font: 400 12px var(--body); fill: var(--ink); }
+  #chart .grid { stroke: var(--ink); stroke-width: 1; opacity: .18; }
+  #chart .band { fill: var(--ink); opacity: .07; }
+  #chart .lbl { font-weight: 500; font-size: 13px; }
+  .game-ctl { display: grid; grid-template-columns: 1fr auto; gap: 14px 22px; align-items: center; }
+  .game-ctl label { display: block; font-size: 15px; margin-bottom: 4px; }
+  .game-ctl label b { font-family: var(--display); font-weight: 800; font-size: 22px; }
+  .game-ctl input[type=range] { width: 100%; accent-color: var(--ink); height: 28px; cursor: ew-resize; }
+  .game-ctl .btn { background: var(--ink); color: var(--paper); }
+  .game-ctl .btn:hover { background: transparent; color: var(--ink); }
+  .game-msg { min-height: 1.6em; margin: 14px 0 0; font-size: 17px; }
+  .game-msg b { font-weight: 500; }
+  .fine { text-align: center; font-size: 14px; opacity: .75; margin: 18px auto 0; max-width: 40em; }
+
+  /* ───────── copilot ───────── */
+  .chat { max-width: 720px; overflow: hidden; }
+  .chat-bar { display: flex; align-items: center; gap: 7px; padding: 11px 16px; border-bottom: 2px solid var(--ink); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+  .chat-bar i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--ink); }
+  .chat-bar i:first-child { background: var(--ink); }
+  .chat-bar span { margin-left: 8px; }
+  .chat-log { height: 330px; overflow-y: auto; padding: 18px 18px 6px; display: flex; flex-direction: column; gap: 10px; background: var(--paper); }
+  .msg { max-width: 86%; padding: 10px 16px; border-radius: 16px; font-size: 17px; line-height: 1.45; }
+  .msg.user { align-self: flex-end; background: var(--ink); color: var(--paper); border-bottom-right-radius: 4px; }
+  .msg.bot { align-self: flex-start; border: 1.5px solid var(--ink); border-bottom-left-radius: 4px; background: var(--paper-2); }
+  .trace { align-self: flex-start; font: 400 12.5px/1.5 ui-monospace, "SF Mono", Menlo, monospace; opacity: .7; padding-left: 4px; white-space: pre-line; }
+  .chat-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 16px; border-top: 1.5px dashed var(--ink); background: var(--paper); }
+  .chat-chips button { font: 400 14.5px var(--body); color: var(--ink); background: none; border: 1.5px solid var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; transition: background .2s, color .2s; }
+  .chat-chips button:hover { background: var(--ink); color: var(--paper); }
+  .chat-form { display: flex; border-top: 2px solid var(--ink); }
+  .chat-form input { flex: 1; min-width: 0; border: 0; background: var(--paper-2); color: var(--ink); font: 300 17px var(--body); padding: 14px 18px; outline: none; }
+  .chat-form input::placeholder { color: var(--ink); opacity: .5; }
+  .chat-form button { border: 0; border-left: 2px solid var(--ink); background: var(--ink); color: var(--paper); font: 400 15px var(--body); letter-spacing: .08em; text-transform: uppercase; padding: 0 22px; cursor: pointer; }
+
+  /* ───────── shipment tracker ───────── */
+  body { padding-bottom: 40px; }
+  .tracker {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; height: 40px; --p: 0;
+    display: flex; align-items: center; gap: 16px; padding: 0 18px;
+    background: var(--paper); border-top: 1.5px solid var(--ink);
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  }
+  .tracker .lane { flex: 1; position: relative; height: 100%; min-width: 60px; }
+  .tracker .lane::before { content: ""; position: absolute; left: 0; right: 0; top: 62%; border-top: 1.5px dashed var(--ink); opacity: .6; }
+  .tracker .truck { position: absolute; top: 50%; left: calc(var(--p) * (100% - 40px)); width: 40px; transform: translateY(-58%); transition: left .15s linear; }
+  .tracker .status { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+  .mascot { cursor: pointer; }
+  .mascot.poked { animation: shake .45s; }
+  @keyframes shake { 20% { transform: rotate(-9deg) scale(1.06); } 50% { transform: rotate(7deg) scale(1.06); } 80% { transform: rotate(-4deg); } }
+  .parcel { position: fixed; z-index: 90; width: 22px; height: 20px; border: 2px solid var(--ink); border-radius: 3px; background: var(--paper-2); pointer-events: none; }
+  .parcel::after { content: ""; position: absolute; left: 40%; width: 20%; top: 0; height: 40%; border: solid var(--ink); border-width: 0 1.5px 1.5px; }
+  .parcel.dark { background: var(--ink); }
+
+  /* ───────── night shift ───────── */
+  :root[data-night] { --paper: #0D1022; --paper-2: #171B38; --ink: #AEBBFF; }
+  :root[data-night][data-ink="forest"] { --ink: #8FE0B8; }
+  :root[data-night][data-ink="vermilion"] { --ink: #FF9E82; }
+  :root[data-night][data-ink="plum"] { --ink: #DDB0F7; }
+  :root[data-night] body::before { display: none; }
+  body { transition: color .4s ease, background-color .4s ease; }
+
+  .navbtn { font: inherit; letter-spacing: inherit; text-transform: uppercase; color: var(--ink); background: var(--paper); border: 1.5px solid var(--ink); border-radius: 999px; padding: 5px 13px; cursor: pointer; white-space: nowrap; transition: background .2s, color .2s; }
+  .navbtn:hover, .navbtn[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .navbtn.icon { width: 30px; height: 30px; padding: 0; font-size: 16px; line-height: 1; }
+  .nav ul { gap: 16px; }
+  .hero-cta { margin-top: 26px; }
+  .print-only { display: none; }
+
+  /* ───────── game tabs + warehouse ───────── */
+  .tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .tabs .btn[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+  .tabs + .card, #wh { margin-top: 26px; }
+  .wh-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0 6px; }
+  .wh-stats div { border: 1.5px solid var(--ink); border-radius: 12px; padding: 10px 8px; text-align: center; background: var(--paper); }
+  .wh-stats b { display: block; font-family: var(--display); font-weight: 800; font-size: 28px; line-height: 1; }
+  .wh-stats span { display: block; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; margin-top: 5px; line-height: 1.25; }
+  #w-chart { width: 100%; height: auto; margin: 8px 0 4px; overflow: visible; }
+  #w-chart text { font: 400 12px var(--body); fill: var(--ink); }
+  #w-chart .grid { stroke: var(--ink); stroke-width: 1; opacity: .18; }
+
+  /* ───────── career route ───────── */
+  .route-wrap { height: 230vh; margin-top: 30px; }
+  .route-stick { position: sticky; top: 64px; height: calc(100vh - 112px); min-height: 380px; display: flex; flex-direction: column; justify-content: center; }
+  .route-cam { overflow: hidden; }
+  #route { width: 100%; min-width: 860px; height: auto; overflow: visible; will-change: transform; }
+  #route .rt-base { stroke-dasharray: 2 11; opacity: .55; }
+  #route .rt-prog { stroke-width: 4; }
+  #route .stn { cursor: pointer; opacity: .38; transition: opacity .4s; outline: none; }
+  #route .stn.on { opacity: 1; }
+  #route .stn .dot { transition: fill .3s; transform-box: fill-box; transform-origin: center; }
+  #route .stn.on .dot { fill: var(--ink); animation: stamp .5s cubic-bezier(.3,1.6,.5,1); }
+  #route .stn:hover .dot, #route .stn:focus-visible .dot { stroke-width: 5; }
+  @keyframes stamp { from { transform: scale(2.2); } }
+  #route .co { font: 800 21px var(--display); fill: var(--ink); letter-spacing: -0.01em; }
+  #route .yr { font: 400 13px var(--body); fill: var(--ink); letter-spacing: .06em; text-transform: uppercase; }
+  #route .city { font: 500 22px var(--hand); fill: var(--ink); opacity: .8; }
+  #route .rider { animation: bob 1.6s ease-in-out infinite; }
+  .route-cap { text-align: center; min-height: 3.2em; margin: 14px auto 0; max-width: 34em; font-size: 19px; }
+  .route-cap b { font-family: var(--display); font-weight: 800; }
+
+  /* ───────── agent mode ───────── */
+  .agent-ui { position: fixed; left: 16px; bottom: 56px; z-index: 80; width: min(340px, calc(100vw - 32px)); margin: 0; overflow: hidden; background: var(--paper); }
+  .agent-trace { font: 400 12.5px/1.6 ui-monospace, "SF Mono", Menlo, monospace; padding: 10px 14px; height: 124px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+  .agent-trace div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: unfold .3s ease; }
+  .agent-stop { display: block; width: 100%; border: 0; border-top: 2px solid var(--ink); background: var(--ink); color: var(--paper); font: 400 13px var(--body); letter-spacing: .1em; text-transform: uppercase; padding: 9px; cursor: pointer; }
+  .agent-cursor { position: fixed; left: 0; top: 0; z-index: 95; width: 30px; pointer-events: none; transition: transform .7s cubic-bezier(.3,.8,.3,1); filter: drop-shadow(0 3px 3px rgba(0,0,0,.25)); }
+  .agent-cursor.tap { animation: tap .3s; }
+  @keyframes tap { 50% { scale: .75; } }
+  .agent-hl { outline: 2px dashed var(--ink); outline-offset: 5px; border-radius: 8px; }
+  [hidden] { display: none !important; }
+
+  /* ───────── camera roll ───────── */
+  .polaroid { --x: 0px; --y: 0px; --r: 0deg; width: 220px; padding: 10px 10px 34px; border: 2px solid var(--ink); border-radius: 10px; background: var(--paper-2); cursor: grab; touch-action: pan-y; user-select: none; position: relative;
+    transform: translate(var(--x), var(--y)) rotate(var(--r)); transition: transform .35s cubic-bezier(.2,.8,.2,1); box-shadow: 0 6px 0 -2px color-mix(in srgb, var(--ink) 22%, transparent); }
+  .polaroid.dragging { transition: none; cursor: grabbing; }
+  .polaroid.big { transform: translate(var(--x), var(--y)) rotate(0) scale(1.7); z-index: 40 !important; }
+  .polaroid img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 5px; pointer-events: none; }
+  .polaroid span { position: absolute; left: 0; right: 0; bottom: 5px; text-align: center; font: 500 19px var(--hand); color: var(--ink); }
+
+  /* ───────── print: a one-page résumé ───────── */
+  @media print {
+    :root, :root[data-night], :root[data-ink] { --ink: #111 !important; --paper: #fff !important; --paper-2: #fff !important; }
+    body { font-size: 10.5pt; padding: 0; }
+    body::before, .nav, .tracker, .agent-ui, .agent-cursor, #play, #ask, #toolbox, #roll, .clients, .curious, .scroll-cue, .psst, .mascot, .hero-cta,
+    .route-wrap, .scene, .wavebot, .contact .btns, .stats, .job .plus, footer, #career .sec-sub, .parcel { display: none !important; }
+    .print-only { display: block; margin-top: 6pt; font-size: 10pt; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    section, .hero { padding: 8pt 0 !important; min-height: 0 !important; display: block; }
+    .hero-inner { margin: 0; max-width: none; }
+    .hero h1 { font-size: 26pt; } .hero .lede { margin-top: 8pt; font-size: 10.5pt; max-width: none; }
+    .manifesto .grid { display: block; } .manifesto h2 { font-size: 13pt; } .manifesto p { margin-top: 4pt; max-width: none; } .manifesto .btns { display: none; }
+    .squig svg { display: none; }
+    .sec-title { font-size: 13pt; text-align: left; }
+    .rows { margin-top: 6pt; border-top-width: 1px; }
+    .row, details.job, details.job summary { border-bottom-width: 1px; padding-top: 3pt; padding-bottom: 3pt; break-inside: avoid; }
+    .row .name, .job .co { font-size: 11pt; }
+    .job .more { padding: 0 0 4pt 0; max-width: none; } .award { font-size: 12pt; margin-top: 2pt; }
+    .contact { text-align: left; } .contact h2 { font-size: 13pt; letter-spacing: 0; } .contact p { margin: 4pt 0 0; max-width: none; }
+  }
+
+  /* ───────── responsive ───────── */
+  @media (max-width: 860px) {
+    body { font-size: 17px; }
+    .nav ul li.link { display: none; }
+    .hero-inner { margin-left: 0; }
+    .psst { display: none; }
+    section { padding-top: 64px; padding-bottom: 64px; }
+    .manifesto .grid { grid-template-columns: 1fr; }
+    .manifesto .scene { order: -1; max-width: 400px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(3) { border-left: 0; }
+    .stat:nth-child(n+3) { border-top: 1.5px solid var(--ink); }
+    .row { grid-template-columns: 1fr; gap: 3px; }
+    .row .tag { margin-top: 4px; opacity: .8; text-align: left; }
+    details.job summary { grid-template-columns: 1fr 26px; gap: 2px 12px; }
+    .job .yrs { grid-column: 1; grid-row: 1; }
+    .job .co { grid-column: 1; }
+    .job .role { grid-column: 1; }
+    .job .plus { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+    .job .more { padding-left: 6px; }
+    .label-card { width: calc(50% - 7px); max-width: 200px; height: 158px; }
+    .face .top span:first-child { display: none; }
+    .face { padding: 11px 12px; }
+    .face h3 { font-size: 18px; margin-top: 10px; }
+    .face.back { font-size: 14px; }
+    .pile { gap: 16px 14px; }
+    .game { padding: 18px 16px 20px; }
+    .navbtn span { display: none; }
+    .nav ul { gap: 9px; }
+    .wh-stats { grid-template-columns: repeat(2, 1fr); }
+    .route-cap { font-size: 17px; }
+    .polaroid { width: calc(50% - 8px); }
+    .game-ctl { grid-template-columns: 1fr; }
+    .tracker .tid { display: none; }
+    .chat-log { height: 300px; }
+    .msg { font-size: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- hand-drawn wobble for all illustrations -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5"/>
+  </filter>
+</svg>
+
+<header class="nav">
+  <a class="mark" href="#top" aria-label="Balwant Singh, back to top">bs.</a>
+  <ul>
+    <li class="link"><a href="#shipped">Work</a></li>
+    <li class="link"><a href="#play">Play</a></li>
+    <li class="link"><a href="#career">Career</a></li>
+    <li class="link"><a href="#toolbox">Toolbox</a></li>
+    <li class="link"><a href="#ask">Ask</a></li>
+    <li class="link"><a href="#hi">Say hi</a></li>
+    <li><button class="navbtn" id="agent-btn" type="button" aria-pressed="false">▶ <span>Agent mode</span></button></li>
+    <li><button class="navbtn icon" id="night-btn" type="button" aria-label="Night shift" aria-pressed="false" title="Night shift">☾</button></li>
+    <li><button class="navbtn icon" id="sound-btn" type="button" aria-label="Sound effects" aria-pressed="false" title="Sound">♪</button></li>
+    <li class="inks" role="group" aria-label="Pick an ink colour">
+      <button style="--c:#1B3BDB" data-ink="cobalt" aria-label="Cobalt ink" aria-pressed="true"></button>
+      <button style="--c:#0C5B3F" data-ink="forest" aria-label="Forest ink" aria-pressed="false"></button>
+      <button style="--c:#CF3A17" data-ink="vermilion" aria-label="Vermilion ink" aria-pressed="false"></button>
+      <button style="--c:#5A2178" data-ink="plum" aria-label="Plum ink" aria-pressed="false"></button>
+    </li>
+  </ul>
+</header>
+
+<main id="top">
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero wrap" data-status="Label created · Bengaluru">
+    <div class="hero-inner">
+      <svg class="mascot" id="mascot" viewBox="0 0 120 112" role="button" tabindex="0" aria-label="Poke the box">
+        <g filter="url(#wobble)">
+          <g class="eyes">
+            <path class="draw" d="M30 12 l9 -5 M81 7 l9 5"/>
+            <ellipse class="draw fill-paper eye" cx="45" cy="36" rx="13" ry="18"/>
+            <ellipse class="draw fill-paper eye" cx="75" cy="36" rx="13" ry="18"/>
+            <circle class="fill-ink pupil" cx="45" cy="36" r="5.2"/>
+            <circle class="fill-ink pupil" cx="75" cy="36" r="5.2"/>
+          </g>
+          <!-- the box they are peeking out of -->
+          <path class="draw fill-paper" d="M18 52 L102 52 L99 106 L21 106 Z"/>
+          <path class="draw fill-paper" d="M18 52 L4 66 M102 52 L116 66"/>
+          <path class="draw" d="M52 52 v16 h16 v-16"/>
+          <path class="draw" d="M30 94 h18 M30 86 h10"/>
+        </g>
+      </svg>
+      <div class="psst" aria-hidden="true">
+        <svg viewBox="0 0 40 30"><path class="draw" style="stroke-width:1.8" d="M38 6 C26 2 12 8 5 24 M5 24 l1 -10 M5 24 l9 -4"/></svg>
+        psst, move your mouse. then poke me
+      </div>
+
+      <h1>Hi, I'm Balwant.</h1>
+      <div class="lede">
+        <p>I live in Bengaluru. I like untangling supply chains and building the AI agents that run them.</p>
+        <p>For 15+ years I've done product and engineering for the planning systems behind retail, automotive, FMCG, pharma, electronics and apparel.</p>
+      </div>
+      <div class="hero-cta"><button class="btn" id="agent-btn2" type="button">▶ Let an agent give you the tour</button></div>
+      <p class="print-only">Balwant Singh · Product &amp; Engineering · Bengaluru, India · linkedin.com/in/balwantsinghblr</p>
+    </div>
+    <a class="scroll-cue" href="#manifesto">scroll ↓</a>
+  </section>
+
+  <!-- ══════════ MANIFESTO ══════════ -->
+  <section class="manifesto wrap" id="manifesto" data-status="Picked up by the agents">
+    <div class="grid">
+      <svg class="scene reveal" viewBox="0 0 520 430" role="img" aria-label="Hand-drawn boxes riding a conveyor belt along a dotted delivery route">
+        <g filter="url(#wobble)">
+          <!-- route -->
+          <path class="draw route" d="M70 78 C130 20 190 120 250 70 S380 10 452 62"/>
+          <g class="float-b">
+            <path class="draw fill-paper" d="M70 80 C52 58 54 38 70 38 C86 38 88 58 70 80 Z"/><circle class="fill-ink" cx="70" cy="54" r="5"/>
+          </g>
+          <g class="float-a">
+            <path class="draw fill-ink" d="M452 64 C434 42 436 22 452 22 C468 22 470 42 452 64 Z"/><circle class="fill-paper" cx="452" cy="38" r="5"/>
+          </g>
+          <!-- sparkles -->
+          <path class="draw" d="M120 150 v12 M114 156 h12 M26 196 v14 M19 203 h14 M180 110 v10 M175 115 h10"/>
+
+          <!-- stacked small box -->
+          <g class="arm">
+            <path class="tube-o" d="M499 150 L400 96 L244 114"/>
+            <path class="tube-i" d="M499 150 L400 96 L244 114"/>
+            <circle class="draw fill-paper" cx="400" cy="96" r="10"/><circle class="fill-ink" cx="400" cy="96" r="3"/>
+            <circle class="draw fill-paper" cx="244" cy="114" r="8"/>
+            <g transform="rotate(-7 250 170)">
+              <path class="draw" d="M236 140 v-14 h30 v14 M251 126 v-8"/>
+              <rect class="draw fill-paper-2" x="212" y="132" width="78" height="72" rx="3"/>
+              <path class="draw" d="M212 150 h78 M244 132 v18 M258 132 v18"/>
+              <rect class="fill-ink" x="224" y="170" width="30" height="20" rx="2"/>
+            </g>
+          </g>
+          <!-- big ink box -->
+          <g transform="rotate(2 255 262)">
+            <rect class="draw fill-ink" x="196" y="208" width="122" height="112" rx="4"/>
+            <path d="M196 236 h122 M248 208 v28 M266 208 v28" fill="none" stroke="var(--paper)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M214 296 h34 M214 284 h20" fill="none" stroke="var(--paper)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M286 300 v-22 M279 285 l7 -8 l7 8" fill="none" stroke="var(--paper)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <!-- left box with a face -->
+          <g transform="rotate(-4 120 272)">
+            <rect class="draw fill-paper" x="70" y="226" width="100" height="94" rx="4"/>
+            <path class="draw" d="M70 248 h100"/>
+            <ellipse class="draw" cx="106" cy="276" rx="6" ry="9"/><ellipse class="draw" cx="134" cy="276" rx="6" ry="9"/>
+            <circle class="fill-ink" cx="108" cy="278" r="2.6"/><circle class="fill-ink" cx="136" cy="278" r="2.6"/>
+            <path class="draw" d="M108 298 q12 9 24 0"/>
+          </g>
+          <!-- right box -->
+          <g transform="rotate(5 388 280)">
+            <rect class="draw fill-paper-2" x="346" y="240" width="84" height="80" rx="4"/>
+            <path class="draw" d="M346 260 h84 M381 240 v20 M395 240 v20"/>
+            <path class="draw" d="M360 304 h4 M368 304 h2 M374 304 h6 M384 304 h2 M390 304 h4" style="stroke-width:10; stroke-linecap:butt"/>
+          </g>
+
+          <!-- robot arm post -->
+          <rect class="draw fill-paper" x="492" y="150" width="14" height="266" rx="3"/>
+          <path class="draw" d="M478 416 h40"/>
+          <circle class="draw fill-ink" cx="499" cy="150" r="12"/>
+          <!-- conveyor -->
+          <rect class="draw fill-paper" x="34" y="322" width="452" height="50" rx="25"/>
+          <g>
+            <g class="roller"><circle class="draw" cx="62" cy="347" r="15"/><path class="draw" d="M62 334 v26 M49 347 h26"/></g>
+            <g class="roller"><circle class="draw" cx="161" cy="347" r="15"/><path class="draw" d="M161 334 v26 M148 347 h26"/></g>
+            <g class="roller"><circle class="draw" cx="260" cy="347" r="15"/><path class="draw" d="M260 334 v26 M247 347 h26"/></g>
+            <g class="roller"><circle class="draw" cx="359" cy="347" r="15"/><path class="draw" d="M359 334 v26 M346 347 h26"/></g>
+            <g class="roller"><circle class="draw" cx="458" cy="347" r="15"/><path class="draw" d="M458 334 v26 M445 347 h26"/></g>
+          </g>
+          <path class="draw" d="M80 372 l-16 44 M440 372 l16 44 M52 416 h30 M438 416 h30"/>
+        </g>
+      </svg>
+
+      <div class="reveal">
+        <h2>Supply chains power the world. I build the <span class="squig">agents<svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path class="draw" d="M2 6 q8 -7 16 0 t16 0 t16 0 t16 0 t16 0 t16 0"/></svg></span> that power them.</h2>
+        <p>Role-based copilots and autonomous agents that forecast demand, plan replenishment, flag exceptions and help planners decide faster, from the warehouse to the store shelf.</p>
+        <div class="btns">
+          <a class="btn" href="#career">Career log</a>
+          <a class="btn" href="https://www.linkedin.com/in/balwantsinghblr/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><b>15+</b><span>years in supply chain</span></div>
+      <div class="stat"><b>6</b><span>industries</span></div>
+      <div class="stat"><b>13</b><span>global clients</span></div>
+      <div class="stat"><b>10</b><span>retail AI domains owned</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════ SHIPPED ══════════ -->
+  <section class="wrap" id="shipped" data-status="In transit · shipped work">
+    <h2 class="sec-title reveal">Some things I shipped</h2>
+    <div class="rows reveal">
+      <div class="row"><span class="name">Category Manager Copilot</span><span>A role-based AI copilot for category and space planning decisions.</span><span class="tag">SymphonyAI</span></div>
+      <div class="row"><span class="name">Demand Planner Copilot</span><span>Better forecasts, automated routine planning, proactive recommendations.</span><span class="tag">SymphonyAI</span></div>
+      <div class="row"><span class="name">Persona-based retail agents</span><span>Autonomous agents across replenishment, promotions, store ops, orders and finance.</span><span class="tag">SymphonyAI</span></div>
+      <div class="row"><span class="name">Supply Chain Control Tower</span><span>Global supply planning and control tower on o9, from design to adoption.</span><span class="tag">Levi Strauss &amp; Co.</span></div>
+      <div class="row"><span class="name">RAG &amp; fine-tuned LLMs</span><span>Prompting and RAG on GPT-4; fine-tuning Llama 2, Mistral and Gemma.</span><span class="tag">Levi Strauss &amp; Co.</span></div>
+      <div class="row"><span class="name">Planning &amp; Optimization Suite</span><span>Roadmap, backlog and releases for SCPO across six industries.</span><span class="tag">Blue Yonder</span></div>
+      <div class="row"><span class="name">RFID track &amp; trace</span><span>Lot-serial-label inventory tracking with RFID and RPA on QAD/SAP.</span><span class="tag">Atos</span></div>
+      <div class="row"><span class="name">Statistical forecast models</span><span>Demand pattern recognition, algorithm selection, outlier correction.</span><span class="tag">Atos</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════ CLIENTS ══════════ -->
+  <section class="clients" aria-label="Clients" data-status="Passing through 14 loading docks">
+    <p class="label">Supply chains I've had my hands in</p>
+    <div class="marquee">
+      <div class="track" id="track">
+        <span>Ford Motors</span><i>✦</i><span>Hindustan Unilever</span><i>✦</i><span>Coca-Cola</span><i>✦</i><span>Lear Corporation</span><i>✦</i><span>Visteon</span><i>✦</i><span>Pfizer</span><i>✦</i><span>Vention Medical</span><i>✦</i><span>Rockwell</span><i>✦</i><span>Amphenol ICC</span><i>✦</i><span>Future Group</span><i>✦</i><span>Harrods</span><i>✦</i><span>Epiroc</span><i>✦</i><span>Edgewell</span><i>✦</i><span>Levi Strauss &amp; Co.</span><i>✦</i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ GAME ══════════ -->
+  <section class="wrap" id="play" data-status="Held at customs · forecast required">
+    <h2 class="sec-title reveal">Can you beat an agent?</h2>
+    <p class="sec-sub reveal">Two small games from my day job. Same opponent in both: a tiny planning agent.</p>
+    <div class="tabs reveal" role="tablist">
+      <button class="btn" role="tab" id="tab-fc" aria-selected="true" type="button">Call the forecast</button>
+      <button class="btn" role="tab" id="tab-wh" aria-selected="false" type="button">Run the warehouse</button>
+    </div>
+    <div class="card game reveal" id="fc">
+      <div class="game-top">
+        <span>Week <b id="g-round">1</b> of 6</span>
+        <span>Total miss · you <b id="g-you">0</b> · agent <b id="g-agent">0</b></span>
+      </div>
+      <svg id="chart" viewBox="0 0 640 250" role="img" aria-label="Weekly demand chart"></svg>
+      <div class="game-ctl">
+        <div>
+          <label for="g-slider">Your forecast: <b id="g-val">120</b> units</label>
+          <input id="g-slider" type="range" min="40" max="220" value="120">
+        </div>
+        <button class="btn" id="g-btn" type="button">Lock it in</button>
+      </div>
+      <p class="game-msg" id="g-msg" aria-live="polite">Look for the trend and the four-week rhythm. Watch out for surprise promo weeks.</p>
+    </div>
+    <div class="card game" id="wh" hidden>
+      <div class="game-top">
+        <span>Week <b id="w-week">1</b> of 10</span>
+        <span>Total cost · you <b id="w-you">0</b> · agent <b id="w-agent">0</b></span>
+      </div>
+      <div class="wh-stats">
+        <div><b id="w-stock">40</b><span>in stock</span></div>
+        <div><b id="w-in">20</b><span>arriving next week</span></div>
+        <div><b id="w-last">–</b><span>last week's demand</span></div>
+        <div><b id="w-lost">0</b><span>sales lost so far</span></div>
+      </div>
+      <svg id="w-chart" viewBox="0 0 640 210" role="img" aria-label="Demand and your orders by week"></svg>
+      <div class="game-ctl">
+        <div>
+          <label for="w-slider">Your order: <b id="w-val">20</b> units, landing in two weeks</label>
+          <input id="w-slider" type="range" min="0" max="60" value="20">
+        </div>
+        <button class="btn" id="w-btn" type="button">Place order</button>
+      </div>
+      <p class="game-msg" id="w-msg" aria-live="polite">Holding a unit costs 1 a week. A lost sale costs 3. Orders take two weeks to land. Lowest total cost wins.</p>
+    </div>
+    <p class="fine reveal">Both agents are a few lines of JavaScript, not the real ones. Demand is random every game. The warehouse game shows the bullwhip effect: how much harder your orders swing than demand does.</p>
+  </section>
+
+  <!-- ══════════ CAREER ══════════ -->
+  <section class="wrap" id="career" data-status="Sorting facility · career log">
+    <h2 class="sec-title reveal">The career log</h2>
+    <p class="sec-sub reveal">From ERP support desks to agentic AI. Keep scrolling and the parcel makes the trip.</p>
+    <div class="route-wrap" id="route-wrap">
+      <div class="route-stick" id="route-stick">
+        <div class="route-cam" id="route-cam"><svg id="route" viewBox="0 0 1000 440" role="img" aria-label="Career route from Thirdware in 2011 to SymphonyAI in 2024"></svg></div>
+        <p class="route-cap" id="route-cap" aria-hidden="true"></p>
+      </div>
+    </div>
+    <p class="sec-sub reveal" style="margin-top:34px">The full manifest. Tap a row to open it.</p>
+    <div class="rows reveal">
+
+      <details class="job" open>
+        <summary><span class="yrs">2024 – 2026</span><span class="co">SymphonyAI</span><span class="role">Associate Director, Product Management · Agentic AI for Retail &amp; Supply Chain</span><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="more"><ul>
+          <li>Owned product strategy and roadmap for agentic AI across demand, replenishment, warehouse, store and channel ops, store mobility, vendor portal, promotions, order management, supply chain finance and connected retail.</li>
+          <li>Built and scaled role-based copilots and autonomous agents, including the Category Manager Copilot and Demand Planner Copilot.</li>
+          <li>Turned customer and market research into personas, journey maps, opportunity maps and prioritised outcomes.</li>
+          <li>Defined AI/GenAI requirements, prototypes, UX, business models and experimentation strategy for the core retail portfolio.</li>
+        </ul></div>
+      </details>
+
+      <details class="job">
+        <summary><span class="yrs">2021 – 2024</span><span class="co">Levi Strauss &amp; Co.</span><span class="role">Engineering Manager · Supply Chain Technology, OMS, MDM, Inventory</span><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="more"><ul>
+          <li>Led implementation and adoption of Global Supply Planning and the Supply Chain Control Tower on o9 Solutions.</li>
+          <li>Designed the end-state global process model for direct-to-consumer, with controls built in.</li>
+          <li>Found AI and cognitive automation opportunities with global stakeholders; built with RAG on GPT-4 and fine-tuned Llama 2, Mistral and Gemma.</li>
+          <li>Ran digital governance, technical roadmaps, budgets and steering updates with Directors and VPs.</li>
+        </ul></div>
+      </details>
+
+      <details class="job">
+        <summary><span class="yrs">2019 – 2021</span><span class="co">Blue Yonder</span><span class="role">Lead Product Manager · Supply Chain Planning &amp; Optimization Suite</span><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="more"><ul>
+          <li>Owned roadmap, prioritisation, backlog and release planning for the planning and optimization suite across retail, automotive, FMCG, pharma, electronics and semiconductors.</li>
+          <li>Prototyped futuristic concepts to find where intelligent products could raise productivity and cut cost.</li>
+          <li>Ran AS-IS / TO-BE supply chain design with customers, including migrations from ERP to the Blue Yonder planning suite.</li>
+          <li>Looked after strategic SaaS customers after go-live.</li>
+        </ul></div>
+      </details>
+
+      <details class="job">
+        <summary><span class="yrs">2020 – 2021</span><span class="co">Algo</span><span class="role">Academic Advisor</span><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="more"><ul><li>Advisory role alongside my work at Blue Yonder.</li></ul></div>
+      </details>
+
+      <details class="job">
+        <summary><span class="yrs">2015 – 2019</span><span class="co">Atos</span><span class="role">Management Consulting · ERP, Logistics &amp; Supply Chain Financials</span><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="more"><ul>
+          <li>Techno-functional consultant and project lead on ERP and S&amp;OP implementations.</li>
+          <li>Architected serialization and track-and-trace: QAD Serialization, NiceLabel, EDI and a lot-serial RFID/RPA inventory tracking solution.</li>
+          <li>Designed and shipped statistical forecast models, plus dashboards for trend analysis and exception management.</li>
+        </ul><span class="award">★ Award for excellent contribution to ERP implementation</span></div>
+      </details>
+
+      <details class="job">
+        <summary><span class="yrs">2013 – 2020</span><span class="co">Dechen Consulting Group</span><span class="role">Independent Consultant</span><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="more"><ul><li>Independent supply chain and ERP consulting, alongside full-time roles.</li></ul></div>
+      </details>
+
+      <details class="job">
+        <summary><span class="yrs">2014 – 2015</span><span class="co">Mahindra Group</span><span class="role">ERP Technical Specialist (at Thirdware)</span><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="more"><ul>
+          <li>Techno-functional consultant across inventory, purchasing, sales and distribution, production planning and S&amp;OP.</li>
+          <li>Built, enhanced and automated ERP business processes; worked on an entity-split project.</li>
+        </ul><span class="award">★ Implementation Excellence Award</span></div>
+      </details>
+
+      <details class="job">
+        <summary><span class="yrs">2011 – 2014</span><span class="co">Thirdware</span><span class="role">Software Engineer → Business Analyst</span><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="more"><ul>
+          <li>Where it started: QAD Enterprise Applications, Cyberquery BI reporting and ERP support desks.</li>
+          <li>Gathered requirements, wrote techno-functional specs, tested custom programs, reports and extracts.</li>
+        </ul><span class="award">★ Awards for the Visteon support and development teams</span></div>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ══════════ CAMERA ROLL (fills itself from the PHOTOS list in the script) ══════════ -->
+  <section class="wrap" id="roll" data-status="Proof of delivery · photos" hidden>
+    <h2 class="sec-title">From my camera roll</h2>
+    <p class="sec-sub">Drag them around, or click one for a closer look.</p>
+    <div class="pile" id="roll-pile"></div>
+  </section>
+
+  <!-- ══════════ TOOLBOX ══════════ -->
+  <section class="wrap" id="toolbox" data-status="Unpacking the toolbox">
+    <h2 class="sec-title reveal">From my toolbox</h2>
+    <p class="sec-sub reveal">Drag them around, or click one to flip it over.</p>
+    <div class="pile reveal" id="pile"></div>
+  </section>
+
+  <!-- ══════════ COPILOT ══════════ -->
+  <section class="wrap" id="ask" data-status="Customer support · ask the copilot">
+    <h2 class="sec-title reveal">Ask my copilot</h2>
+    <p class="sec-sub reveal">I build copilots for planners, so here's one for recruiters.</p>
+    <div class="card chat reveal">
+      <div class="chat-bar"><i></i><i></i><i></i><span>balwant-copilot · scripted demo</span></div>
+      <div class="chat-log" id="chat-log" aria-live="polite"></div>
+      <div class="chat-chips" id="chat-chips"></div>
+      <form class="chat-form" id="chat-form">
+        <input id="chat-in" type="text" autocomplete="off" placeholder="Ask about work, industries, tools…" aria-label="Ask the copilot a question">
+        <button type="submit">Ask</button>
+      </form>
+    </div>
+    <p class="fine reveal">No model behind this one. It answers from a script built on my career log.</p>
+  </section>
+
+  <!-- ══════════ CURIOUS ══════════ -->
+  <section class="wrap curious" data-status="Small detour · curiosities">
+    <h2 class="sec-title reveal">Currently curious about</h2>
+    <div class="cloud reveal">
+      <span class="chip">Loop engineering</span>
+      <span class="chip">Deterministic vs probabilistic planning</span>
+      <span class="chip">Generative AI &amp; LLMs</span>
+      <span class="chip">ESG strategy</span>
+      <span class="chip">Solana</span>
+      <span class="chip">DeFi</span>
+      <span class="chip">Social metaverse</span>
+    </div>
+  </section>
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <section class="contact wrap" id="hi" data-status="Delivered. Say hi.">
+    <svg class="wavebot reveal" viewBox="0 0 140 150" aria-hidden="true">
+      <g filter="url(#wobble)">
+        <path class="draw" d="M70 18 v14"/><circle class="fill-ink" cx="70" cy="13" r="5"/>
+        <rect class="draw fill-paper" x="38" y="32" width="64" height="46" rx="13"/>
+        <ellipse class="fill-ink" cx="57" cy="53" rx="5" ry="7"/><ellipse class="fill-ink" cx="83" cy="53" rx="5" ry="7"/>
+        <path class="draw" d="M60 66 q10 7 20 0 M70 78 v8"/>
+        <rect class="draw fill-ink" x="46" y="86" width="48" height="44" rx="9"/>
+        <rect x="61" y="99" width="18" height="15" rx="2" fill="none" stroke="var(--paper)" stroke-width="2.5"/>
+        <path d="M61 105 h18" fill="none" stroke="var(--paper)" stroke-width="2.5"/>
+        <path class="draw" d="M46 98 q-17 6 -14 24 M58 130 v14 h-8 M82 130 v14 h8"/>
+        <g class="wave-arm"><path class="draw" d="M94 98 q18 -6 22 -28"/><circle class="draw fill-paper" cx="117" cy="64" r="6"/></g>
+      </g>
+    </svg>
+    <h2 class="reveal">Say hi<span class="wave">.</span></h2>
+    <p class="reveal">Building something agentic for manufacturing, supply chain, retail or procurement? I'd love to hear about it.</p>
+    <div class="btns reveal">
+      <a class="btn" href="https://www.linkedin.com/in/balwantsinghblr/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <button class="btn" id="print-btn" type="button">Print résumé</button>
+      <a class="btn" href="#top">Back to top ↑</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Balwant Singh · Bengaluru, India</span>
+  <span>© <span id="yr">2026</span> · Drawn in one ink</span>
+</footer>
+
+<div class="agent-ui card" id="agent-ui" hidden>
+  <div class="chat-bar"><i></i><i></i><i></i><span>agent mode · live trace</span></div>
+  <div class="agent-trace" id="agent-trace" aria-live="polite"></div>
+  <button class="agent-stop" id="agent-stop" type="button">Stop the tour · Esc</button>
+</div>
+<svg class="agent-cursor" id="agent-cursor" viewBox="0 0 30 34" aria-hidden="true" hidden><path d="M4 3 L4 27 L11 21 L16 32 L20 30 L15 19 L25 19 Z" class="draw fill-ink" style="stroke:var(--paper);stroke-width:2"/></svg>
+
+<div class="tracker" id="tracker" aria-hidden="true">
+  <span class="tid">Tracking BS-2011-2026</span>
+  <span class="lane"><svg class="truck" viewBox="0 0 40 24"><rect class="draw fill-ink" x="2" y="4" width="22" height="13" rx="2" style="stroke-width:2"/><path class="draw fill-paper" style="stroke-width:2" d="M24 8 h7 l6 5 v4 h-13 z"/><circle class="draw fill-paper" style="stroke-width:2" cx="10" cy="19" r="3.2"/><circle class="draw fill-paper" style="stroke-width:2" cx="31" cy="19" r="3.2"/></svg></span>
+  <span class="status" id="t-status">Label created · Bengaluru</span>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* ── things you can fill in ──
+     PHOTOS: drop image files next to this page and list them, e.g.
+       { src: 'photos/award.jpg', caption: 'Implementation award' }
+     COPILOT_ENDPOINT: a URL that accepts POST { question } and returns { answer }.
+       Leave empty to keep the scripted answers. */
+  var PHOTOS = [];
+  var COPILOT_ENDPOINT = '';
+  root.classList.add('js');
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ── ink picker ── */
+  var inkBtns = document.querySelectorAll('.inks button');
+  function setInk(name) {
+    if (name === 'cobalt') root.removeAttribute('data-ink'); else root.setAttribute('data-ink', name);
+    inkBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.ink === name)); });
+    try { localStorage.setItem('ink', name); } catch (e) {}
+  }
+  inkBtns.forEach(function (b) { b.addEventListener('click', function () { setInk(b.dataset.ink); }); });
+  try { var saved = localStorage.getItem('ink'); if (saved) setInk(saved); } catch (e) {}
+
+  /* ── eyes follow the pointer ── */
+  var eyes = document.querySelectorAll('.mascot .eye');
+  var pupils = document.querySelectorAll('.mascot .pupil');
+  window.addEventListener('pointermove', function (e) {
+    eyes.forEach(function (eye, i) {
+      var r = eye.getBoundingClientRect();
+      var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      var d = Math.min(1, Math.hypot(dx, dy) / 160), a = Math.atan2(dy, dx);
+      pupils[i].style.transform = 'translate(' + (Math.cos(a) * 6 * d).toFixed(2) + 'px,' + (Math.sin(a) * 10 * d).toFixed(2) + 'px)';
+    });
+  }, { passive: true });
+
+  document.querySelectorAll('.scene .draw:not(.route)').forEach(function (el) { el.setAttribute('pathLength', '1'); });
+
+  /* ── marquee: duplicate once for a seamless loop ── */
+  var track = document.getElementById('track');
+  track.innerHTML += track.innerHTML;
+
+  /* ── toolbox labels ── */
+  var tools = [
+    ['Agentic AI', 'Persona-based agents, GenAI copilots, forecasting and decision intelligence.'],
+    ['Demand Forecasting', 'Statistical models, pattern recognition, outlier correction, parameter tuning.'],
+    ['S&OP / S&OE', 'Capacity, demand and supply planning, net demand, exception management.'],
+    ['Control Towers', 'End-to-end visibility on o9 and Blue Yonder Luminate.'],
+    ['LLMs & RAG', 'GPT-4 and Vision, plus fine-tuned Llama 2, Mistral and Gemma.'],
+    ['Blue Yonder SCPO', 'Demand, Fulfillment and the wider planning and optimization suite.'],
+    ['o9 Solutions', 'Global supply planning and reference models, rolled out at scale.'],
+    ['QAD ERP', 'Serialization, EDI, distribution and manufacturing. Progress 4GL too.'],
+    ['Python · TensorFlow', 'Keras, PL/SQL and whatever else the forecast needs.'],
+    ['Azure', 'Azure certified. Cosmos DB, Redis, CI/CD, APIs and microservices.'],
+    ['Full stack', 'Angular, TypeScript, Node.js, .NET Core, Java and a bit of Rust.'],
+    ['MRP · OTC · P2P · S2P', 'Plus TMS, warehouse, inventory, logistics and supply chain financials.'],
+    ['Merchandise & Omni', 'Merchandise planning, omni-channel, category and space planning.'],
+    ['Change Management', 'Governance, steering committees, and getting people to actually use it.']
+  ];
+  var tilts = [-5, 3, -2, 6, -4, 2, 5, -6, 3, -3, 4, -2, 6, -4];
+  var pile = document.getElementById('pile');
+  var topZ = 5;
+  tools.forEach(function (t, i) {
+    var b = document.createElement('button');
+    b.className = 'label-card';
+    b.type = 'button';
+    b.style.setProperty('--r', tilts[i % tilts.length] + 'deg');
+    b.setAttribute('aria-label', t[0] + '. ' + t[1]);
+    var n = String(i + 1).padStart(3, '0');
+    b.innerHTML =
+      '<span class="inner">' +
+        '<span class="face"><span class="top"><span>Ship to: you</span><span>BS-' + n + '</span></span><h3></h3><span class="barcode"></span></span>' +
+        '<span class="face back"></span>' +
+      '</span>';
+    b.querySelector('h3').textContent = t[0];
+    b.querySelector('.back').textContent = t[1];
+    pile.appendChild(b);
+
+    var sx, sy, ox = 0, oy = 0, moved = false, down = false;
+    b.addEventListener('pointerdown', function (e) {
+      down = true; moved = false; sx = e.clientX; sy = e.clientY;
+      b.style.zIndex = ++topZ;
+      try { b.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    b.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - sx, dy = e.clientY - sy;
+      if (!moved && Math.hypot(dx, dy) < 6) return;
+      moved = true; b.classList.add('dragging');
+      b.style.setProperty('--x', (ox + dx) + 'px');
+      b.style.setProperty('--y', (oy + dy) + 'px');
+    });
+    function end(e) {
+      if (!down) return; down = false;
+      if (moved) { ox += e.clientX - sx; oy += e.clientY - sy; }
+      b.classList.remove('dragging');
+    }
+    b.addEventListener('pointerup', end);
+    b.addEventListener('pointercancel', function () {
+      down = false; b.classList.remove('dragging');
+      b.style.setProperty('--x', ox + 'px'); b.style.setProperty('--y', oy + 'px');
+    });
+    b.addEventListener('click', function () { if (!moved) { b.classList.toggle('flipped'); blip(520); } moved = false; });
+  });
+
+  /* ── poke the mascot: it spills parcels ── */
+  var mascot = document.getElementById('mascot');
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function poke() {
+    mascot.classList.remove('poked'); void mascot.getBoundingClientRect(); mascot.classList.add('poked'); blip(330); setTimeout(function () { blip(494); }, 90);
+    if (calm || !mascot.animate) return;
+    var r = mascot.getBoundingClientRect();
+    for (var i = 0; i < 16; i++) (function (i) {
+      var d = document.createElement('div');
+      d.className = 'parcel' + (i % 3 === 0 ? ' dark' : '');
+      d.style.left = (r.left + r.width / 2 - 11) + 'px'; d.style.top = (r.top + 10) + 'px';
+      document.body.appendChild(d);
+      var dx = (Math.random() - .5) * 720, up = -(120 + Math.random() * 220), rot = (Math.random() - .5) * 900;
+      d.animate([
+        { transform: 'translate(0,0) rotate(0)', offset: 0 },
+        { transform: 'translate(' + dx * .45 + 'px,' + up + 'px) rotate(' + rot * .4 + 'deg)', offset: .35, easing: 'ease-in' },
+        { transform: 'translate(' + dx + 'px,' + (innerHeight + 60) + 'px) rotate(' + rot + 'deg)', offset: 1 }
+      ], { duration: 1300 + Math.random() * 700, delay: i * 22, easing: 'ease-out', fill: 'both' }).onfinish = function () { d.remove(); };
+    })(i);
+  }
+  mascot.addEventListener('click', poke);
+  mascot.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); poke(); } });
+
+  /* ── shipment tracker ── */
+  var tracker = document.getElementById('tracker'), tStatus = document.getElementById('t-status');
+  var stops = [].slice.call(document.querySelectorAll('section[data-status]')).filter(function (s) { return !s.hidden; });
+  function updateTracker() {
+    var max = document.documentElement.scrollHeight - innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+    tracker.style.setProperty('--p', p.toFixed(4));
+    var mid = scrollY + innerHeight * .55, label = stops[0].dataset.status;
+    stops.forEach(function (s) { if (s.getBoundingClientRect().top + scrollY <= mid) label = s.dataset.status; });
+    if (p > .995) { label = stops[stops.length - 1].dataset.status; deliver(); }
+    if (tStatus.textContent !== label) tStatus.textContent = label;
+  }
+  window.addEventListener('scroll', updateTracker, { passive: true });
+  window.addEventListener('resize', updateTracker);
+  updateTracker();
+
+  /* ── forecasting game ── */
+  (function () {
+    var NS = 'http://www.w3.org/2000/svg', chart = document.getElementById('chart');
+    var slider = document.getElementById('g-slider'), val = document.getElementById('g-val'), btn = document.getElementById('g-btn');
+    var msg = document.getElementById('g-msg'), elRound = document.getElementById('g-round'), elYou = document.getElementById('g-you'), elAgent = document.getElementById('g-agent');
+    var W = 640, H = 250, L = 34, R = 78, T = 14, B = 28, LO = 40, HI = 220, ROUNDS = 6;
+    var hist, t, base, slope, seas, round, you, agent, state, reveal;
+    function gauss() { return (Math.random() + Math.random() + Math.random() - 1.5) * 2; }
+    function next() {
+      var v = base + slope * t + seas[t % 4] + gauss() * 6 + (t > 11 && Math.random() < .14 ? 26 : 0);
+      t++; return Math.round(Math.min(HI - 6, Math.max(LO + 6, v)));
+    }
+    function agentCall(h) {
+      var n = h.length, a = 0, b = 0, i;
+      for (i = 1; i <= 4; i++) { a += h[n - i]; b += h[n - 4 - i]; }
+      return Math.round(Math.min(HI, Math.max(LO, (h[n - 4] + h[n - 8]) / 2 + 6 * ((a - b) / 16))));
+    }
+    function X(i) { return L + i * (W - L - R) / 12; }
+    function Y(v) { return T + (HI - v) / (HI - LO) * (H - T - B); }
+    function el(tag, attrs, text) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      if (text != null) e.textContent = text;
+      chart.appendChild(e); return e;
+    }
+    function draw() {
+      chart.textContent = '';
+      var h = hist.slice(-12), i, g = +slider.value;
+      [50, 100, 150, 200].forEach(function (v) {
+        el('line', { class: 'grid', x1: L, x2: W - R + 14, y1: Y(v), y2: Y(v) });
+        el('text', { x: L - 8, y: Y(v) + 4, 'text-anchor': 'end' }, v);
+      });
+      el('rect', { class: 'band', x: X(12) - 16, y: T, width: 32, height: H - T - B, rx: 8 });
+      el('text', { x: X(12), y: H - 6, 'text-anchor': 'middle' }, 'next week');
+      el('text', { x: X(0), y: H - 6 }, 'last 12 weeks');
+      var pts = h.map(function (v, i) { return X(i) + ',' + Y(v); }).join(' ');
+      el('polyline', { class: 'draw', points: pts });
+      for (i = 0; i < 12; i++) el('circle', { class: 'fill-ink', cx: X(i), cy: Y(h[i]), r: 4 });
+      el('line', { class: 'draw', x1: X(11), y1: Y(h[11]), x2: X(12), y2: Y(g), 'stroke-dasharray': '2 7', style: 'stroke-width:2' });
+      var marks = [{ k: 'you', v: g }];
+      if (reveal) {
+        marks.push({ k: 'agent', v: reveal.agent }, { k: 'actual', v: reveal.actual });
+        var ax = X(12), ay = Y(reveal.agent);
+        el('rect', { class: 'draw fill-paper', x: ax - 6, y: ay - 6, width: 12, height: 12, transform: 'rotate(45 ' + ax + ' ' + ay + ')' });
+        el('circle', { class: 'fill-ink', cx: X(12), cy: Y(reveal.actual), r: 7 });
+      }
+      el('circle', { class: 'draw fill-paper', cx: X(12), cy: Y(g), r: 7.5 });
+      marks.sort(function (a, b) { return b.v - a.v; });
+      var prev = -99;
+      marks.forEach(function (m) {
+        var y = Math.max(Y(m.v) + 4, prev + 15); prev = y;
+        el('text', { class: 'lbl', x: X(12) + 22, y: y }, m.k + ' ' + m.v);
+      });
+    }
+    function hud() { elRound.textContent = Math.min(round, ROUNDS); elYou.textContent = you; elAgent.textContent = agent; }
+    function start() {
+      base = 88 + Math.random() * 34; slope = [1.7, .5, -1.1, 2.2][Math.floor(Math.random() * 4)];
+      var amp = 9 + Math.random() * 12, sh = Math.floor(Math.random() * 4), shape = [.2, 1, -1, .35];
+      seas = [0, 1, 2, 3].map(function (i) { return shape[(i + sh) % 4] * amp; });
+      t = 0; hist = []; for (var i = 0; i < 12; i++) hist.push(next());
+      round = 1; you = 0; agent = 0; state = 'guess'; reveal = null;
+      slider.disabled = false; slider.value = hist[11]; val.textContent = slider.value;
+      btn.textContent = 'Lock it in';
+      msg.textContent = 'Look for the trend and the four-week rhythm. Watch out for surprise promo weeks.';
+      hud(); draw();
+    }
+    slider.addEventListener('input', function () { val.textContent = slider.value; if (state === 'guess') draw(); });
+    btn.addEventListener('click', function () {
+      if (state === 'guess') {
+        blip(660);
+        var g = +slider.value, a = agentCall(hist), actual = next();
+        reveal = { agent: a, actual: actual };
+        var my = Math.abs(g - actual), ag = Math.abs(a - actual);
+        you += my; agent += ag; state = 'reveal'; slider.disabled = true;
+        msg.innerHTML = 'Actual was <b>' + actual + '</b>. You missed by <b>' + my + '</b>, the agent by <b>' + ag + '</b>. ' +
+          (my < ag ? 'Round to you.' : my > ag ? 'Round to the agent.' : 'Dead heat.');
+        btn.textContent = round === ROUNDS ? 'See the verdict' : 'Next week →';
+        hud(); draw();
+      } else if (state === 'reveal') {
+        hist.push(reveal.actual); reveal = null;
+        if (round === ROUNDS) {
+          state = 'done'; var d = agent - you;
+          msg.innerHTML = d > 0 ? 'You beat the agent by <b>' + d + '</b> units. Planners like you are why copilots need a human in the loop.'
+            : d < 0 ? 'The agent wins by <b>' + (-d) + '</b> units, and it never gets tired. That is why I build them.'
+            : 'A perfect tie. Human and agent, working as designed.';
+          btn.textContent = 'Play again'; slider.disabled = true; slider.value = hist[hist.length - 1]; val.textContent = slider.value; draw();
+        } else {
+          round++; state = 'guess'; slider.disabled = false; slider.value = hist[hist.length - 1]; val.textContent = slider.value;
+          btn.textContent = 'Lock it in'; msg.textContent = 'Week ' + round + '. Your call.'; hud(); draw();
+        }
+      } else start();
+    });
+    start();
+  })();
+
+  /* ── scripted copilot ── */
+  (function () {
+    var log = document.getElementById('chat-log'), chips = document.getElementById('chat-chips');
+    var form = document.getElementById('chat-form'), input = document.getElementById('chat-in'), busy = false;
+    var LI = 'https://www.linkedin.com/in/balwantsinghblr/';
+    var qa = [
+      { q: 'What do you actually do?', k: ['do', 'role', 'job', 'about', 'who'], src: 'about.md',
+        a: 'I turn messy planning work into products. Lately that means role-based copilots and autonomous agents for retail: forecasting demand, planning replenishment, and flagging exceptions before a planner has to go looking.' },
+      { q: 'What have you shipped?', k: ['ship', 'built', 'build', 'project', 'work', 'product', 'copilot'], src: 'shipped.csv',
+        a: 'The Category Manager Copilot and Demand Planner Copilot at SymphonyAI. Global supply planning and a control tower on o9 at Levi Strauss & Co. The planning and optimization suite roadmap at Blue Yonder. And an RFID track-and-trace solution on QAD back at Atos.' },
+      { q: 'Product or engineering?', k: ['engineer', 'code', 'technical', 'pm', 'manager', 'stack', 'python'], src: 'career_log.json',
+        a: 'Both, on purpose. I started as a software engineer on QAD ERP in 2011, ran engineering for supply chain tech at Levi Strauss & Co., and led product at Blue Yonder and SymphonyAI. I can write the spec and read the stack trace.' },
+      { q: 'Which industries?', k: ['industr', 'client', 'customer', 'retail', 'domain', 'sector'], src: 'clients.csv',
+        a: 'Retail, automotive, FMCG, pharma, electronics and apparel. Clients have included Ford, Hindustan Unilever, Coca-Cola, Pfizer, Lear, Visteon and Harrods.' },
+      { q: 'What are you curious about?', k: ['curious', 'interest', 'learn', 'research', 'hobby', 'crypto', 'solana', 'llm', 'ai'], src: 'notebook.txt',
+        a: 'Loop engineering, deterministic versus probabilistic planning, LLMs and generative AI, ESG strategy, and a side interest in Solana and DeFi.' },
+      { q: 'How do I reach you?', k: ['reach', 'contact', 'hire', 'email', 'linkedin', 'talk', 'hi', 'hello'], src: 'contact.vcf',
+        a: 'LinkedIn is the fastest route. I am based in Bengaluru and happy to talk about anything agentic in manufacturing, supply chain, retail or procurement.', link: true }
+    ];
+    qa.push(
+      { q: 'Why agents?', k: ['why', 'agent', 'agentic', 'autonom'], src: 'notes/agents.md',
+        a: 'Planning is full of routine calls a planner already knows how to make. Agents can take those, surface the exceptions early, and recommend a next move, so people spend their time on the decisions that need judgment.' },
+      { q: 'What tools do you know?', k: ['tool', 'tech', 'skill', 'blue', 'o9', 'qad', 'azure', 'language'], src: 'toolbox.yaml',
+        a: 'Planning platforms: Blue Yonder SCPO, o9 and QAD ERP. For AI: Python, TensorFlow, Keras, RAG on GPT-4 and fine-tuned open models. Around that: Azure, Angular, Node.js, .NET and a bit of Rust.' }
+    );
+    var fallback = { src: 'script.txt', a: 'I am a scripted demo, so that one is beyond me. Try one of the questions below, or ask the real Balwant on LinkedIn.', link: true };
+    function add(cls, text) { var d = document.createElement('div'); d.className = cls; d.textContent = text || ''; log.appendChild(d); log.scrollTop = log.scrollHeight; return d; }
+    function wait(ms) { return new Promise(function (r) { setTimeout(r, calm ? 0 : ms); }); }
+    async function answer(q, item) {
+      if (busy) return; busy = true;
+      add('msg user', q);
+      var tr = add('trace', '▸ planning');
+      await wait(420); tr.textContent += '\n▸ retrieving ' + item.src; log.scrollTop = log.scrollHeight;
+      await wait(520); tr.textContent += '\n▸ drafting answer'; log.scrollTop = log.scrollHeight;
+      await wait(380);
+      var text = item.a;
+      if (COPILOT_ENDPOINT) {
+        try {
+          var res = await fetch(COPILOT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q }) });
+          var data = await res.json(); if (data && data.answer) text = String(data.answer);
+        } catch (err) {}
+      }
+      blip(440);
+      var b = add('msg bot', '');
+      if (calm) b.textContent = text;
+      else for (var t0 = Date.now(), n = 0; n < text.length;) { n = Math.min(text.length, Math.ceil((Date.now() - t0) / 6) + 1); b.textContent = text.slice(0, n); log.scrollTop = log.scrollHeight; await wait(16); }
+      if (item.link) { var a = document.createElement('a'); a.href = LI; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Open LinkedIn ↗'; b.appendChild(document.createTextNode(' ')); b.appendChild(a); }
+      log.scrollTop = log.scrollHeight; busy = false;
+    }
+    qa.forEach(function (item) {
+      var c = document.createElement('button'); c.type = 'button'; c.textContent = item.q;
+      c.addEventListener('click', function () { answer(item.q, item); });
+      chips.appendChild(c);
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = input.value.trim(); if (!q || busy) return; input.value = '';
+      var low = q.toLowerCase(), best = null, score = 0;
+      qa.forEach(function (item) {
+        var s = item.k.filter(function (k) { return new RegExp('\\b' + k).test(low); }).length;
+        if (s > score) { score = s; best = item; }
+      });
+      answer(q, best || fallback);
+    });
+    add('msg bot', 'Hi, I am Balwant\'s copilot. Pick a question, or type your own.');
+  })();
+
+  /* ── shared helpers ── */
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function S(parent, tag, attrs, text) {
+    var e = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    parent.appendChild(e); return e;
+  }
+  function $(id) { return document.getElementById(id); }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  /* ── sound (off until asked for) ── */
+  var soundOn = false, actx = null, soundBtn = $('sound-btn');
+  function blip(freq, dur) {
+    if (!soundOn) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      var o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime;
+      o.type = 'triangle'; o.frequency.value = freq || 520;
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.12, t + .012); g.gain.exponentialRampToValueAtTime(.0001, t + (dur || .14));
+      o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + (dur || .14) + .02);
+    } catch (e) {}
+  }
+  soundBtn.addEventListener('click', function () {
+    soundOn = !soundOn; soundBtn.setAttribute('aria-pressed', String(soundOn));
+    if (soundOn) { blip(523); setTimeout(function () { blip(784); }, 110); }
+  });
+
+  /* ── night shift ── */
+  var nightBtn = $('night-btn');
+  function setNight(on) {
+    if (on) root.setAttribute('data-night', ''); else root.removeAttribute('data-night');
+    nightBtn.setAttribute('aria-pressed', String(on)); nightBtn.textContent = on ? '☀' : '☾';
+    try { localStorage.setItem('night', on ? '1' : ''); } catch (e) {}
+  }
+  nightBtn.addEventListener('click', function () { setNight(!root.hasAttribute('data-night')); blip(392); });
+  try { if (localStorage.getItem('night')) setNight(true); } catch (e) {}
+
+  /* ── delivered: parcels rain once when you reach the end ── */
+  var delivered = false;
+  function deliver() {
+    if (delivered) return; delivered = true;
+    blip(523); setTimeout(function () { blip(659); }, 120); setTimeout(function () { blip(784, .3); }, 240);
+    if (calm || !document.body.animate) return;
+    for (var i = 0; i < 28; i++) (function (i) {
+      var d = document.createElement('div');
+      d.className = 'parcel' + (i % 3 === 0 ? ' dark' : '');
+      d.style.left = (Math.random() * (innerWidth - 30)) + 'px'; d.style.top = '-30px';
+      document.body.appendChild(d);
+      var rot = (Math.random() - .5) * 700;
+      d.animate([{ transform: 'translateY(0) rotate(0)' }, { transform: 'translateY(' + (innerHeight + 80) + 'px) rotate(' + rot + 'deg)' }],
+        { duration: 1500 + Math.random() * 1300, delay: Math.random() * 700, easing: 'cubic-bezier(.4,0,.9,.6)', fill: 'both' }).onfinish = function () { d.remove(); };
+    })(i);
+  }
+
+  /* ── print résumé ── */
+  var wasOpen = null;
+  function openAll() { if (wasOpen) return; var ds = [].slice.call(document.querySelectorAll('details.job')); wasOpen = ds.map(function (d) { return d.open; }); ds.forEach(function (d) { d.open = true; }); }
+  function restoreAll() { if (!wasOpen) return; [].slice.call(document.querySelectorAll('details.job')).forEach(function (d, i) { d.open = wasOpen[i]; }); wasOpen = null; }
+  window.addEventListener('beforeprint', openAll); window.addEventListener('afterprint', restoreAll);
+  $('print-btn').addEventListener('click', function () { openAll(); window.print(); });
+
+  /* ── generic drag (used by the camera roll) ── */
+  var dragZ = 5;
+  function draggable(el, onTap) {
+    var sx, sy, ox = 0, oy = 0, moved = false, down = false;
+    el.addEventListener('pointerdown', function (e) { down = true; moved = false; sx = e.clientX; sy = e.clientY; el.style.zIndex = ++dragZ; try { el.setPointerCapture(e.pointerId); } catch (err) {} });
+    el.addEventListener('pointermove', function (e) {
+      if (!down) return; var dx = e.clientX - sx, dy = e.clientY - sy;
+      if (!moved && Math.hypot(dx, dy) < 6) return;
+      moved = true; el.classList.add('dragging'); el.style.setProperty('--x', (ox + dx) + 'px'); el.style.setProperty('--y', (oy + dy) + 'px');
+    });
+    el.addEventListener('pointerup', function (e) { if (!down) return; down = false; if (moved) { ox += e.clientX - sx; oy += e.clientY - sy; } el.classList.remove('dragging'); });
+    el.addEventListener('pointercancel', function () { down = false; el.classList.remove('dragging'); el.style.setProperty('--x', ox + 'px'); el.style.setProperty('--y', oy + 'px'); });
+    el.addEventListener('click', function () { if (!moved) onTap(); moved = false; });
+  }
+  if (PHOTOS.length) {
+    var roll = $('roll'), rollPile = $('roll-pile'); roll.hidden = false;
+    PHOTOS.forEach(function (ph, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'polaroid';
+      b.style.setProperty('--r', [-5, 4, -2, 6, -4, 3][i % 6] + 'deg');
+      var img = document.createElement('img'); img.src = ph.src; img.alt = ph.caption || ''; img.loading = 'lazy'; img.draggable = false;
+      var cap = document.createElement('span'); cap.textContent = ph.caption || '';
+      b.appendChild(img); b.appendChild(cap); rollPile.appendChild(b);
+      draggable(b, function () { b.classList.toggle('big'); blip(520); });
+    });
+    stops = [].slice.call(document.querySelectorAll('section[data-status]')).filter(function (s) { return !s.hidden; });
+  }
+
+  /* ── career route: a parcel rides the map as you scroll ── */
+  var routeUpdate = (function () {
+    var wrap = $('route-wrap'), stick = $('route-stick'), cam = $('route-cam'), svg = $('route'), cap = $('route-cap');
+    var jobs = document.querySelectorAll('details.job');
+    var stns = [
+      { y: '2011', co: 'Thirdware', city: 'Mumbai', role: 'Software engineer, then business analyst, on QAD ERP.', job: 7 },
+      { y: '2014', co: 'Mahindra Group', city: 'Chennai', role: 'ERP technical specialist across inventory, purchasing and S&OP.', job: 6, lx: -22, ly: -10, anchor: 'end' },
+      { y: '2015', co: 'Atos', city: 'Bengaluru', role: 'ERP and S&OP consulting, forecast models, RFID track and trace.', job: 4, lx: 0, ly: -84 },
+      { y: '2019', co: 'Blue Yonder', city: 'Bengaluru', role: 'Lead product manager for the planning and optimization suite.', job: 2 },
+      { y: '2021', co: 'Levi Strauss & Co.', city: '', role: 'Engineering manager: global supply planning and a control tower on o9.', job: 1 },
+      { y: '2024', co: 'SymphonyAI', city: 'Bengaluru', role: 'Associate director of product, agentic AI for retail and supply chain.', job: 0 }
+    ];
+    var D = 'M70 300 C 190 300 200 110 340 100 S 470 290 610 270 S 760 80 930 70';
+    var deco = S(svg, 'g', { filter: 'url(#wobble)' });
+    S(deco, 'path', { class: 'draw', d: 'M60 90 v14 M53 97 h14 M505 120 v12 M499 126 h12 M800 300 v14 M793 307 h14 M250 330 v10 M245 335 h10' });
+    S(deco, 'path', { class: 'draw', d: 'M690 360 q14 -26 30 0 q12 -34 30 0 M860 250 q12 -22 26 0 q10 -28 24 0' });
+    S(svg, 'path', { class: 'draw rt-base', d: D });
+    var prog = S(svg, 'path', { class: 'draw rt-prog', d: D }), L = prog.getTotalLength();
+    prog.style.strokeDasharray = L; prog.style.strokeDashoffset = L;
+    stns.forEach(function (s, i) {
+      var pt = prog.getPointAtLength(L * i / (stns.length - 1));
+      var g = S(svg, 'g', { class: 'stn', tabindex: 0, role: 'button', 'aria-label': s.y + ', ' + s.co + '. ' + s.role + ' Open details.' });
+      S(g, 'circle', { cx: pt.x, cy: pt.y, r: 30, fill: 'transparent' });
+      S(g, 'circle', { class: 'draw fill-paper dot', cx: pt.x, cy: pt.y, r: 11 });
+      var lx = pt.x + (s.lx || 0), ly = pt.y + (s.ly == null ? 42 : s.ly), an = s.anchor || 'middle';
+      S(g, 'text', { class: 'co', x: lx, y: ly, 'text-anchor': an }, s.co);
+      S(g, 'text', { class: 'yr', x: lx, y: ly + 19, 'text-anchor': an }, s.y + (s.city ? ' · ' + s.city : ''));
+      function open() { var d = jobs[s.job]; d.open = true; d.scrollIntoView({ block: 'center', behavior: calm ? 'auto' : 'smooth' }); blip(587); }
+      g.addEventListener('click', open);
+      g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+      s.g = g;
+    });
+    var rider = S(svg, 'g', {}), box = S(rider, 'g', { class: 'rider', filter: 'url(#wobble)' });
+    S(box, 'ellipse', { class: 'draw fill-paper', cx: -8, cy: -44, rx: 7, ry: 10 }); S(box, 'ellipse', { class: 'draw fill-paper', cx: 8, cy: -44, rx: 7, ry: 10 });
+    S(box, 'circle', { class: 'fill-ink', cx: -6, cy: -43, r: 3 }); S(box, 'circle', { class: 'fill-ink', cx: 10, cy: -43, r: 3 });
+    S(box, 'rect', { class: 'draw fill-ink', x: -19, y: -36, width: 38, height: 30, rx: 3 });
+    S(box, 'path', { d: 'M-19 -26 h38 M-4 -36 v10 M4 -36 v10', fill: 'none', stroke: 'var(--paper)', 'stroke-width': 2 });
+    var last = -2;
+    function update() {
+      var r = wrap.getBoundingClientRect(), total = wrap.offsetHeight - stick.offsetHeight;
+      var p = total > 0 ? Math.min(1, Math.max(0, (64 - r.top) / total)) : 0;
+      var pt = prog.getPointAtLength(L * p);
+      prog.style.strokeDashoffset = L * (1 - p);
+      rider.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ')');
+      var svgW = svg.getBoundingClientRect().width, camW = cam.clientWidth;
+      svg.style.transform = svgW > camW + 1 ? 'translateX(' + Math.min(0, Math.max(camW - svgW, camW / 2 - pt.x * svgW / 1000)).toFixed(1) + 'px)' : '';
+      var n = r.top > innerHeight ? -1 : Math.floor(p * (stns.length - 1) + .03);
+      if (n !== last) {
+        stns.forEach(function (s, i) { s.g.classList.toggle('on', i <= n); });
+        if (n > last && last > -2 && n >= 0) blip(660 + n * 60);
+        last = n; cap.textContent = '';
+        if (n >= 0) { var b = document.createElement('b'); b.textContent = stns[n].y + ' · ' + stns[n].co + '. '; cap.appendChild(b); cap.appendChild(document.createTextNode(stns[n].role + (n < stns.length - 1 ? ' Keep scrolling ↓' : ' Delivered.'))); }
+        else cap.textContent = 'Scroll to send the parcel on its way ↓';
+      }
+    }
+    window.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', update); update();
+    return update;
+  })();
+
+  /* ── warehouse game (the bullwhip effect) ── */
+  (function () {
+    var tabFc = $('tab-fc'), tabWh = $('tab-wh'), fc = $('fc'), wh = $('wh');
+    function tab(which) { var w = which === 'wh'; wh.hidden = !w; fc.hidden = w; tabWh.setAttribute('aria-selected', String(w)); tabFc.setAttribute('aria-selected', String(!w)); blip(494); }
+    tabFc.addEventListener('click', function () { tab('fc'); }); tabWh.addEventListener('click', function () { tab('wh'); });
+    var chart = $('w-chart'), slider = $('w-slider'), val = $('w-val'), btn = $('w-btn'), msg = $('w-msg');
+    var WEEKS = 10, HOLD = 1, LOST = 3, D, week, me, ai, done;
+    function gauss() { return (Math.random() + Math.random() + Math.random() - 1.5) * 2; }
+    function variance(a) { var m = a.reduce(function (x, y) { return x + y; }, 0) / a.length; return a.reduce(function (x, y) { return x + (y - m) * (y - m); }, 0) / a.length; }
+    function fresh() { return { stock: 40, pipe: [20], cost: 0, lost: 0, orders: [] }; }
+    function aiOrder() {
+      var h = [20, 20, 20].concat(D.slice(0, week - 1)).slice(-3), f = (h[0] + h[1] + h[2]) / 3;
+      return Math.max(0, Math.round(f * 3 + 6 - ai.stock - ai.pipe[0]));
+    }
+    function settle(st, q, d) {
+      var sold = Math.min(st.stock, d), lost = d - sold;
+      st.stock -= sold; st.lost += lost; st.cost += st.stock * HOLD + lost * LOST; st.orders.push(q); st.pipe.push(q);
+      return { sold: sold, lost: lost };
+    }
+    function draw() {
+      chart.textContent = '';
+      var W = 640, H = 210, Lp = 34, R = 16, T = 22, B = 26, HI = 60;
+      function X(i) { return Lp + i * (W - Lp - R) / (WEEKS - 1); }
+      function Y(v) { return T + (HI - Math.min(HI, v)) / HI * (H - T - B); }
+      [0, 20, 40, 60].forEach(function (v) { S(chart, 'line', { class: 'grid', x1: Lp, x2: W - R, y1: Y(v), y2: Y(v) }); S(chart, 'text', { x: Lp - 8, y: Y(v) + 4, 'text-anchor': 'end' }, v); });
+      for (var i = 0; i < WEEKS; i++) S(chart, 'text', { x: X(i), y: H - 6, 'text-anchor': 'middle' }, 'w' + (i + 1));
+      S(chart, 'line', { class: 'draw', x1: Lp, x2: Lp + 26, y1: 8, y2: 8 }); S(chart, 'text', { x: Lp + 32, y: 12 }, 'demand');
+      S(chart, 'line', { class: 'draw', x1: Lp + 100, x2: Lp + 126, y1: 8, y2: 8, 'stroke-dasharray': '2 7' }); S(chart, 'text', { x: Lp + 132, y: 12 }, 'your orders');
+      var n = me.orders.length; if (!n) return;
+      var dem = D.slice(0, n);
+      S(chart, 'polyline', { class: 'draw', points: dem.map(function (v, i) { return X(i) + ',' + Y(v); }).join(' ') });
+      S(chart, 'polyline', { class: 'draw', 'stroke-dasharray': '2 7', points: me.orders.map(function (v, i) { return X(i) + ',' + Y(v); }).join(' ') });
+      dem.forEach(function (v, i) { S(chart, 'circle', { class: 'fill-ink', cx: X(i), cy: Y(v), r: 4 }); });
+      me.orders.forEach(function (v, i) { S(chart, 'circle', { class: 'draw fill-paper', cx: X(i), cy: Y(v), r: 5 }); });
+    }
+    function hud() {
+      $('w-week').textContent = Math.min(week, WEEKS); $('w-you').textContent = me.cost; $('w-agent').textContent = ai.cost;
+      $('w-stock').textContent = me.stock; $('w-in').textContent = me.pipe[0]; $('w-lost').textContent = me.lost;
+      $('w-last').textContent = week > 1 ? D[week - 2] : '–';
+    }
+    function start() {
+      var step = 3 + Math.floor(Math.random() * 3); D = [];
+      for (var i = 0; i < WEEKS; i++) D.push(Math.round(Math.min(45, Math.max(8, 20 + (i >= step ? 9 : 0) + gauss() * 3.5))));
+      week = 1; me = fresh(); ai = fresh(); done = false;
+      slider.disabled = false; slider.value = 20; val.textContent = 20; btn.textContent = 'Place order';
+      msg.textContent = 'Holding a unit costs 1 a week. A lost sale costs 3. Orders take two weeks to land. Lowest total cost wins.';
+      hud(); draw();
+    }
+    slider.addEventListener('input', function () { val.textContent = slider.value; });
+    btn.addEventListener('click', function () {
+      if (done) return start();
+      blip(660);
+      var d = D[week - 1], q = +slider.value, r = settle(me, q, d); settle(ai, aiOrder(), d);
+      week++;
+      if (week > WEEKS) {
+        done = true; slider.disabled = true; btn.textContent = 'Play again';
+        var vd = variance(D), bw = vd ? (variance(me.orders) / vd).toFixed(1) : '–', ba = vd ? (variance(ai.orders) / vd).toFixed(1) : '–', diff = ai.cost - me.cost;
+        msg.innerHTML = (diff > 0 ? 'You win by <b>' + diff + '</b>.' : diff < 0 ? 'The agent wins by <b>' + (-diff) + '</b>.' : 'A dead heat.') +
+          ' Your orders swung <b>' + bw + '×</b> as hard as demand; the agent\'s swung <b>' + ba + '×</b>. Anything over 1× is the bullwhip effect.';
+        hud(); draw(); return;
+      }
+      me.stock += me.pipe.shift(); ai.stock += ai.pipe.shift();
+      msg.innerHTML = 'Demand was <b>' + d + '</b>. You sold ' + r.sold + (r.lost ? ' and <b>lost ' + r.lost + '</b>' : '') + '. A delivery just landed, so you now hold <b>' + me.stock + '</b>.';
+      hud(); draw();
+    });
+    start();
+  })();
+
+  /* ── agent mode: a guided tour that drives the page ── */
+  (function () {
+    var ui = $('agent-ui'), trace = $('agent-trace'), cursor = $('agent-cursor'), btns = [$('agent-btn'), $('agent-btn2')], run = 0, active = false;
+    function say(t) { var d = document.createElement('div'); d.textContent = '▸ ' + t; trace.appendChild(d); while (trace.children.length > 6) trace.firstChild.remove(); }
+    function glide(y, ms) {
+      y = Math.max(0, Math.min(y, document.documentElement.scrollHeight - innerHeight));
+      var from = scrollY, t0 = Date.now(), me = run;
+      return new Promise(function (res) {
+        (function tick() {
+          if (me !== run) return res();
+          var k = calm ? 1 : Math.min(1, (Date.now() - t0) / ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+          window.scrollTo({ top: from + (y - from) * e, behavior: 'instant' });
+          k < 1 ? setTimeout(tick, 16) : res();
+        })();
+      });
+    }
+    function see(el, ms) { var r = el.getBoundingClientRect(); return glide(r.top + scrollY - Math.max(80, (innerHeight - r.height) / 2), ms || 1000); }
+    async function point(el) { var r = el.getBoundingClientRect(); cursor.style.transform = 'translate(' + (r.left + r.width / 2) + 'px,' + (r.top + r.height / 2) + 'px)'; await sleep(780); }
+    async function tap(el) { await point(el); cursor.classList.add('tap'); el.click(); await sleep(380); cursor.classList.remove('tap'); }
+    function stop() {
+      if (!active) return; active = false; run++; ui.hidden = true; cursor.setAttribute('hidden', '');
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      document.querySelectorAll('.agent-hl').forEach(function (e) { e.classList.remove('agent-hl'); });
+    }
+    async function tour() {
+      var me = ++run; active = true; trace.textContent = ''; ui.hidden = false; cursor.removeAttribute('hidden');
+      cursor.style.transform = 'translate(' + innerWidth / 2 + 'px,' + innerHeight / 2 + 'px)';
+      btns.forEach(function (b) { b.setAttribute('aria-pressed', 'true'); });
+      var steps = [
+        async function () { say('goal: show this visitor why Balwant'); await sleep(700); say('plan: 7 stops, about 45 seconds'); var h = document.querySelector('.manifesto h2'); await see(h); await point(h); await sleep(1400); },
+        async function () { say('read("shipped work")'); await see($('shipped')); var rows = document.querySelectorAll('#shipped .row');
+          for (var i = 0; i < 3; i++) { if (me !== run) return; await point(rows[i]); rows[i].classList.add('agent-hl'); await sleep(650); rows[i].classList.remove('agent-hl'); } },
+        async function () { say('tool: forecast(next_week)'); if ($('fc').hidden) $('tab-fc').click(); await see($('fc')); await point($('g-slider')); await tap($('g-btn')); say('result: ' + $('g-msg').textContent.slice(0, 40) + '…'); await sleep(1700); },
+        async function () { say('replay(career, 2011 → 2026)'); var w = $('route-wrap'), top = w.getBoundingClientRect().top + scrollY - 64; await glide(top, 900);
+          cursor.style.transform = 'translate(' + innerWidth / 2 + 'px,' + innerHeight * .3 + 'px)'; await glide(top + w.offsetHeight - $('route-stick').offsetHeight, 5200); await sleep(900); },
+        async function () { say('inspect(toolbox)'); var cards = document.querySelectorAll('.label-card'); await see($('pile')); await tap(cards[0]); await sleep(700); if (me !== run) return; await tap(cards[4]); await sleep(900); },
+        async function () { say('delegate(copilot, "what have you shipped?")'); await see(document.querySelector('.chat')); await tap(document.querySelectorAll('#chat-chips button')[1]); await sleep(4600); },
+        async function () { say('recommendation: say hi'); await see($('hi'), 1400); await point(document.querySelector('.contact .btn')); await sleep(1500); say('done. handing the controls back to you.'); await sleep(1600); }
+      ];
+      for (var i = 0; i < steps.length; i++) { if (me !== run) return; await steps[i](); }
+      if (me === run) stop();
+    }
+    btns.forEach(function (b) { b.addEventListener('click', function () { blip(587); active ? stop() : tour(); }); });
+    $('agent-stop').addEventListener('click', stop);
+    window.addEventListener('keydown', function (e) { if (e.key === 'Escape') stop(); });
+    window.addEventListener('wheel', stop, { passive: true }); window.addEventListener('touchmove', stop, { passive: true });
+  })();
+
+  /* ── reveal on scroll ── */
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>
